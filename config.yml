@@ -1,0 +1,27 @@
+models:
+  CVAE:
+    latent_dim: 64
+    ref_filters: 32
+    w_init: he_normal
+    activation: leaky_relu
+    dtype: float32
+    seed: 42
+    training_params:
+      batch_sz: 2
+      optimizer: adam
+      learning_rate: 0.0003
+      cost_function: MSE
+      epochs: 100
+
+data:
+  train_wkt: data/BurnedAreaUAV_dataset/WKT/train_valid.wkt
+  test_wkt: data/BurnedAreaUAV_dataset/WKT/test.wkt
+  train_dir: data/train
+  train_sampled_dir: data/train_sampled
+  test_dir: data/test
+  sampled_masks_txt: data/sampled_masks.txt
+  sampled_masks_wkt: data/sampled_masks.wkt
+  original_vid_dims: [720, 1280]
+  input_size: [512, 512] 
+  doi: 10.5281/zenodo.7944963D
+
