@@ -108,16 +108,14 @@ def wkt2masc(wkt_file, images_path, orig_dims, height, width):
 
 def load_images_from_folder(folder_path, target_size=(256, 256)):
     """
-    Load and resize images from a specified folder.
-
+    Loads all images from a folder into a numpy array.
     Parameters:
-    - folder_path (str): Path to the folder containing images.
-    - target_size (tuple): Desired size for the images after resizing. Default is (256, 256).
-
+        folder_path {str} -- path to the folder containing the images
+        target_size {tuple} -- desired dimensions of the images
     Returns:
-    - images (numpy.ndarray): Array of resized images with shape (N, H, W, C).
+        images {numpy.ndarray} -- numpy array containing the images (N, H, W, 1)
     """
-
+    
     images = []
 
     # Check if the folder exists
@@ -126,7 +124,7 @@ def load_images_from_folder(folder_path, target_size=(256, 256)):
         return images
 
     # Loop through all files in the folder
-    for filename in os.listdir(folder_path):
+    for filename in sorted(os.listdir(folder_path)):
         file_path = os.path.join(folder_path, filename)
 
         # Check if the file is a valid image
@@ -136,14 +134,17 @@ def load_images_from_folder(folder_path, target_size=(256, 256)):
             try:
                 # Open and resize the image using OpenCV
                 img = cv2.imread(file_path)
-                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                # to grayscale => these are binary masks
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 img = cv2.resize(img, target_size)
                 images.append(img)
             except Exception as e:
                 print(f"Error loading image '{filename}': {str(e)}")
 
-    # Convert the list of images to a numpy array
-    images = np.array(images)
+    # Convert the list of images to a numpy array of dtype float32
+    images = np.array(images).astype("float32")
+    # expand dimensions to be compatible with the input shape of the model
+    images = np.expand_dims(images, axis=-1)
 
     return images
 
