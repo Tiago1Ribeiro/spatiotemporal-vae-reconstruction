@@ -1,8 +1,9 @@
 ```bash
 conda create --name cvae python=3.10  
-git clone https://github.com/Tiago1Ribeiro/spatiotemporal-vae-reconstruction.git  
+git clone https://github.com/Tiago1Ribeiro/spatiotemporal-vae-reconstruction.git
+cd spatiotemporal-vae-reconstruction
 pip install -r requirements.txt  
-zenodo_get --output data 10.5281/zenodo.7944963D  
+zenodo_get --output data 10.5281/zenodo.7944963  
 ```
 
 ### To do list:
