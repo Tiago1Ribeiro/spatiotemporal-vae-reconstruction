@@ -1,5 +1,13 @@
 # Reconstructing Spatiotemporal Data with C-VAEs 
 
+## To do list:
+- [ ] Testar CVAE refatorado (resolver problema com mse_kl_loss)
+- [ ] Incluir as U-Net samples no dataset!
+- [ ] Implementar os 4 modos de treino
+- [ ] Construir modelos alternativos ao CVAE do artigo ADBIS 2023
+- [ ] Adaptar código para facilmente mudar a configuração do dataset  
+      (total, amostrado, total extrapolação, amostrado extrapolação)
+
 ### Overview
 
 Summary here.
@@ -28,11 +36,4 @@ pip install -r requirements.txt
 # Downloads *BurnedAreaUAU* dataset and save it in the 'dataset' directory
 zenodo_get --output dataset 10.5281/zenodo.7944963
 ```
-### To do list:
-- [ ] Testar CVAE refatorado (resolver problema com mse_kl_loss)
-- [ ] Incluir as U-Net samples no dataset!
-- [ ] Implementar os 4 modos de treino
-- [ ] Construir modelos alternativos ao CVAE do artigo ADBIS 2023
-- [ ] Adaptar código para facilmente mudar a configuração do dataset  
-      (total, amostrado, total extrapolação, amostrado extrapolação)
 
