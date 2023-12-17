@@ -1,6 +1,9 @@
+```bash
 conda create --name cvae python=3.10  
+git clone https://github.com/Tiago1Ribeiro/spatiotemporal-vae-reconstruction.git  
 pip install -r requirements.txt  
 zenodo_get --output data 10.5281/zenodo.7944963D  
+```
 
 ### To do list:
 - [] Testar CVAE refatorado (resolver problema com mse_kl_loss)
