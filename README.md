@@ -25,7 +25,7 @@ cd spatiotemporal-vae-reconstruction
 # Install the Python dependencies listed in the 'requirements.txt' file
 pip install -r requirements.txt  
 
-# Download the dataset from Zenodo using its DOI (Digital Object Identifier) and save it in the 'dataset' directory
+# Downloads *BurnedAreaUAU* dataset and save it in the 'dataset' directory
 zenodo_get --output dataset 10.5281/zenodo.7944963
 ```
 ### To do list:
@@ -33,5 +33,6 @@ zenodo_get --output dataset 10.5281/zenodo.7944963
 - [ ] Incluir as U-Net samples no dataset!
 - [ ] Implementar os 4 modos de treino
 - [ ] Construir modelos alternativos ao CVAE do artigo ADBIS 2023
-- [ ] Adaptar código para facilmente mudar a configuração do dataset (total, amostrado, total extrapolação, amostrado extrapolação)
+- [ ] Adaptar código para facilmente mudar a configuração do dataset  
+      (total, amostrado, total extrapolação, amostrado extrapolação)
 
