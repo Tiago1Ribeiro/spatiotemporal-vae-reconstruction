@@ -1,3 +1,17 @@
+# Reconstructing Spatiotemporal Data with C-VAEs 
+
+### Overview
+
+Summary here.
+
+### Prerequisites:
+- <tt>conda</tt> for managing Python environments.
+- <tt>git</tt> for version control.
+- <tt>zenodo-get</tt> downloader.
+- Python 3.10.
+
+
+### Setting up the environment
 ```bash
 # Create a new Conda environment named 'cvae' with Python version 3.10
 conda create --name cvae python=3.10  
@@ -15,8 +29,9 @@ pip install -r requirements.txt
 zenodo_get --output dataset 10.5281/zenodo.7944963
 ```
 ### To do list:
-- [] Testar CVAE refatorado (resolver problema com mse_kl_loss)
-- [] Implementar os 4 modos de treino
-- [] Construir modelos alternativos ao CVAE do artigo ADBIS 2023
-- [] Adaptar código para facilmente mudar a configuração do dataset (total, amostrado, total extrapolação, amostrado extrapolação)
+- [ ] Testar CVAE refatorado (resolver problema com mse_kl_loss)
+- [ ] Incluir as U-Net samples no dataset!
+- [ ] Implementar os 4 modos de treino
+- [ ] Construir modelos alternativos ao CVAE do artigo ADBIS 2023
+- [ ] Adaptar código para facilmente mudar a configuração do dataset (total, amostrado, total extrapolação, amostrado extrapolação)
 
