@@ -19,6 +19,18 @@ Summary here.
 - Python 3.10.
 
 
+## Operating System
+
+This project has been tested on the following operating systems:
+
+- Pop! OS 22.04 LTS (Nvidia)
+- Windows 11
+
+## CUDA Versions
+
+HERE
+
+
 ### Setting up the environment
 ```bash
 # Create a new Conda environment named 'cvae' with Python version 3.10
@@ -34,6 +46,6 @@ cd spatiotemporal-vae-reconstruction
 pip install -r requirements.txt  
 
 # Downloads *BurnedAreaUAU* dataset and save it in the 'dataset' directory
-zenodo_get --output dataset 10.5281/zenodo.7944963
+zenodo_get --output dataset 10.5281/zenodo.7944963 # or dowload it from the link below
 ```
 

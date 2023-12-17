@@ -1,8 +1,6 @@
-# Images
-*.png 
-
 # Directories
 data/
+dataset/
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -10,3 +8,9 @@ data/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+
+# Vscode settings
+.vscode/
+
+# Images
+*.png 
