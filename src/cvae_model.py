@@ -243,7 +243,7 @@ class CVAE:
         epsilon = K.random_normal(shape=(batch, dim))
         return z_mean + K.exp(0.5 * z_log_var) * epsilon
 
-    def mse_kl_loss(self, y_true, y_pred):
+    def mse_kl_loss(self, y_true, y_pred, z_mean, z_log_var):
         """
         Computes the combined Mean Squared Error (MSE) and Kullback-Leibler (KL) loss.
 

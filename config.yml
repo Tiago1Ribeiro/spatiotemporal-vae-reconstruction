@@ -16,8 +16,8 @@ CVAE:
 
 
 data:
-  train_wkt: data/BurnedAreaUAV_dataset/WKT/train_valid.wkt
-  test_wkt: data/BurnedAreaUAV_dataset/WKT/test.wkt
+  train_wkt: dataset/BurnedAreaUAV_dataset/WKT/train_valid.wkt
+  test_wkt: dataset/BurnedAreaUAV_dataset/WKT/test.wkt
   train_dir: data/train
   test_dir: data/test
   train_sampled_dir: data/train_sampled
