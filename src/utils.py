@@ -27,6 +27,8 @@ from tqdm import tqdm
 #             print(exc)
 
 
+
+
 def wkt2masc(wkt_file, images_path, orig_dims, height, width):
     """
     Converts WKT files to segmentation masks.

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_learning_curves(history):
+def plot_learning_curves(history, log_scale=True):
     """
     Plots learning curves for a trained model.
 
@@ -22,18 +22,19 @@ def plot_learning_curves(history):
     >>> history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=10)
     >>> plot_learning_curves(history)
     """
-    setup_plot()
+    setup_plot(log_scale)
     plot_loss(history)
     plot_min_loss_points(history)
     plot_learning_rate_changes(history)
     plt.show()
 
 
-def setup_plot():
+def setup_plot(log_scale=True):
     plt.figure(figsize=(15, 6))
     plt.title("Learning Curves")
     plt.grid(True, linestyle="-.", linewidth=0.3)
-    plt.yscale("log")
+    if log_scale:
+        plt.yscale("log")
     plt.xlabel("Epochs")
     plt.ylabel("Loss")
 
@@ -70,6 +71,7 @@ def plot_min_loss_point(min_loss, min_loss_epoch, color):
         arrowprops=dict(arrowstyle="->", connectionstyle="arc3"),
     )
 
+
 def plot_learning_rate_changes(history):
     if "lr" in history.history.keys():
         lr_changes = find_learning_rate_changes(history)
@@ -83,6 +85,7 @@ def plot_learning_rate_changes(history):
                 color="black",
                 rotation=90,
             )
+
 
 def find_learning_rate_changes(history):
     return [
