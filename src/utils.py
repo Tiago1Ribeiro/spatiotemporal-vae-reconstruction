@@ -115,7 +115,7 @@ def load_images_from_folder(folder_path, target_size=(256, 256)):
     Returns:
         images {numpy.ndarray} -- numpy array containing the images (N, H, W, 1)
     """
-    
+
     images = []
 
     # Check if the folder exists
@@ -137,6 +137,8 @@ def load_images_from_folder(folder_path, target_size=(256, 256)):
                 # to grayscale => these are binary masks
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 img = cv2.resize(img, target_size)
+                # Normalize the image to [-1, 1]
+                img = img.astype("float32") / 127.5 - 1
                 images.append(img)
             except Exception as e:
                 print(f"Error loading image '{filename}': {str(e)}")

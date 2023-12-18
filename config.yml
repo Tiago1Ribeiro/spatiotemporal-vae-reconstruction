@@ -24,5 +24,5 @@ data:
   sampled_masks_txt: data/sampled_masks.txt
   sampled_masks_wkt: data/sampled_masks.wkt
   original_vid_dims: [720, 1280]
-  input_size: [512, 512] 
+  input_size: [512, 512, 1]      # [H, W, C] format
   doi: 10.5281/zenodo.7944963D
