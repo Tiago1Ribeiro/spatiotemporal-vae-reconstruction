@@ -1,5 +1,6 @@
 # Directories
 dataset/
+src/data_
 
 # Jupyter Notebook
 .ipynb_checkpoints
