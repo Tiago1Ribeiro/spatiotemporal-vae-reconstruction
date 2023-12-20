@@ -98,3 +98,49 @@ def find_learning_rate_changes(history):
         for i in range(len(history.history["lr"]))
         if history.history["lr"][i] != history.history["lr"][i - 1]
     ]
+
+
+def plot_generated_imgs(model, frames_num_list: List[int]):
+    """
+    Plots generated images from a trained model.
+
+    Parameters:
+    model (keras.Model or torch.nn.Module): The trained model.
+    frames_num_list (List[int]): The list of frames numbers.
+
+    Returns:
+    None
+
+    Side effects:
+    Displays the generated images using matplotlib.
+    """
+    # Check if model and frames_num_list are not None
+    if model is None:
+        raise ValueError("No model was provided. Please provide a trained model.")
+    if frames_num_list is None:
+        raise ValueError(
+            "No frames number list was provided. Please provide a list of frames numbers."
+        )
+
+    # Generate images from the latent space
+    z = np.random.normal((len(frames_num_list), model.input_shape[1]))
+    if hasattr(model, "forward"):
+        # PyTorch model
+        z = torch.from_numpy(z).float()
+        generated_imgs = model.forward(z).detach().numpy()
+    else:
+        # Keras model
+        generated_imgs = model.predict(z)
+
+    # Scale the pixel values to the range [0, 1]
+    generated_imgs = (generated_imgs + 1) / 2.0
+
+    # Plot the generated images using the frames_num_list as reference, 2 columns
+    n_rows = int(len(frames_num_list) / 2)
+    _, axs = plt.subplots(n_rows, 2, figsize=(15, 15))
+    axs = axs.flatten()
+    for i, img in enumerate(generated_imgs):
+        axs[i].imshow(img)
+        axs[i].set_title(f"Frame {frames_num_list[i]}")
+
+    plt.show()
