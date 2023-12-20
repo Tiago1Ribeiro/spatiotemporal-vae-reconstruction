@@ -4,6 +4,9 @@ This module contains functions for visualizing data and models.
 import matplotlib.pyplot as plt
 import numpy as np
 
+# typing
+from typing import List
+
 
 def plot_learning_curves(history, log_scale=True):
     """
@@ -93,3 +96,5 @@ def find_learning_rate_changes(history):
         for i in range(len(history.history["lr"]))
         if history.history["lr"][i] != history.history["lr"][i - 1]
     ]
+
+

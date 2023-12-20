@@ -14,3 +14,9 @@ __pycache__/
 
 # Images
 *.png 
+
+# Model files
+*.h5
+*.hdf5
+*.pt
+*.pth

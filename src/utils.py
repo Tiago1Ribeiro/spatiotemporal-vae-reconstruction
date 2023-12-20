@@ -9,6 +9,7 @@ import numpy as np
 # import yaml
 import cv2
 from tqdm import tqdm
+from typing import List
 
 
 # def load_config(config_path):
@@ -25,8 +26,6 @@ from tqdm import tqdm
 #             return config
 #         except yaml.YAMLError as exc:
 #             print(exc)
-
-
 
 
 def wkt2masc(wkt_file, images_path, orig_dims, height, width):
@@ -209,21 +208,39 @@ def mask_to_polygons(mask_img):
 
 
 def frames2video(
-    img_list,
-    nome_ficheiro="video",
-    fps_=25,
-    titulo: str = "",
-    frame_num_text=False,
+    img_list: List[str],
+    nome_ficheiro: str = "video",
+    fps_: int = 25,
+    title: str = "",
+    frame_num_text: bool = False,
     font_size: int = 1,
 ) -> None:
     """
-    Converte lista de imagens em ficheiro AVI com a mesma resolucão da primeira
-    imagem da lista.
-      Parametros: - lista de imagens PNG, TIFF, JPEG, BMP, WEBP, STK, LSM ou XCF
-                  - nome do ficheiro do video
-      Devolve: salva vídeo no diretório de execucão
+    Converts a list of images into an AVI file with the same resolution as the first image in the list.
+
+    Parameters:
+    img_list (List[str]): A list of image file paths.
+    nome_ficheiro (str): The name of the video file. Default is "video".
+    fps_ (int): The frames per second. Default is 25.
+    title (str): The title of the video. Default is an empty string.
+    frame_num_text (bool): Whether to add frame numbers to the video. Default is False.
+    font_size (int): The font size of the frame numbers. Default is 1.
+
+    Returns:
+    None
+
+    Side effects:
+    Saves the video in the current directory.
     """
-    # guarda dimensões da primeira imagem
+    # Check if the image files exist and are valid images
+    for img_file in img_list:
+        if not os.path.isfile(img_file):
+            raise ValueError(f"File {img_file} does not exist.")
+        img = cv2.imread(img_file)
+        if img is None:
+            raise ValueError(f"File {img_file} is not a valid image.")
+
+    # Save the dimensions of the first image
     img = cv2.imread(img_list[0])
     height, width, _ = img.shape
     size = (width, height)
@@ -256,10 +273,10 @@ def frames2video(
                 2,
                 cv2.LINE_AA,
             )
-        if titulo:
+        if title:
             cv2.putText(
                 img_array[i],
-                titulo,
+                title,
                 (50, 50),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 font_size,
@@ -269,5 +286,23 @@ def frames2video(
             )
 
         video.write(img_array[i])
-        print(f"3. Writing frames to file {i+1}/{num_frames}", end="\r")
+        print(f"3. Writing frames to file {i+1}/{num_frames}    ", end="\r")
     video.release()
+
+
+def frame_to_label(frame, max_frame=22500):
+    """
+    Label encoding function. It converts the frame number to a 0 to 1 value float32.
+
+    Parameters:
+    frame (int): The absolute frame number.
+    max_frame (int): The maximum frame number. Default is 22500.
+
+    Returns:
+    np.array: The normalized frame number as a 0 to 1 value float32.
+    """
+    # Convert the frame number to a 0 to 1 value float32
+    label = np.float32(frame / max_frame)
+    # Expand the dimensions of the label to make it compatible with the model
+    label = np.expand_dims(label, axis=0)
+    return label

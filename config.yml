@@ -6,12 +6,12 @@ CVAE:
   activation: leaky_relu
   dtype: float32
   seed: 42
-  threshold: 0.5
+  threshold: 0
   batch_sz: 2
   optimizer: adam
   learning_rate: 0.0003
   cost_function: MSE
-  epochs: 100
+  epochs: 500
 
 
 
@@ -23,6 +23,7 @@ data:
   train_sampled_dir: data/train_sampled
   sampled_masks_txt: data/sampled_masks.txt
   sampled_masks_wkt: data/sampled_masks.wkt
+  checkpoint_dir: checkpoints
   original_vid_dims: [720, 1280]
   input_size: [512, 512, 1]      # [H, W, C] format
   doi: 10.5281/zenodo.7944963D
