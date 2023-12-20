@@ -4,6 +4,8 @@ This module contains functions for visualizing data and models.
 import matplotlib.pyplot as plt
 import numpy as np
 
+plt.rcParams.update({"figure.max_open_warning": 0})
+
 # typing
 from typing import List
 
@@ -37,7 +39,7 @@ def setup_plot(log_scale=True):
     plt.title("Learning Curves")
     plt.grid(True, linestyle="-.", linewidth=0.3)
     if log_scale:
-        plt.yscale("log")
+        plt.yscale("symlog")
     plt.xlabel("Epochs")
     plt.ylabel("Loss")
 
@@ -96,5 +98,3 @@ def find_learning_rate_changes(history):
         for i in range(len(history.history["lr"]))
         if history.history["lr"][i] != history.history["lr"][i - 1]
     ]
-
-

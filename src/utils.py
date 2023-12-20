@@ -146,70 +146,33 @@ def load_images_from_folder(folder_path, target_size=(256, 256)):
 
     # Convert the list of images to a numpy array of dtype float32
     images = np.array(images).astype("float32")
-    # expand dimensions to be compatible with the input shape of the model
+    # Expand dimensions to be compatible with the input shape of the model
     images = np.expand_dims(images, axis=-1)
 
     return images
 
 
-def frame_to_label(frame):
-    label = np.float32(frame / 22500)
+def frame_to_label(frame: int, max_frame: int = 22500) -> np.array:
+    """
+    Converts the absolute frame number to a 0 to 1 value float32.
+
+    Parameters:
+    frame (int): The absolute frame number.
+    max_frame (int): The maximum frame number. Default is 22500.
+
+    Returns:
+    np.array: The normalized frame number as a 0 to 1 value float32.
+    """
+    # Convert the frame number to a 0 to 1 value float32
+    label = np.float32(frame / max_frame)
+    # Expand the dimensions of the label to make it compatible with the model
     label = np.expand_dims(label, axis=0)
     return label
 
 
-def msks_paths_to_polygon_list(msks_paths, out_dim=(512, 512)):
-    """
-    Converts segmentation masks paths list to list of shapely multipolygons.
-
-    Parameters:
-        msks_paths {list} -- list of paths to the masks
-        out_dim {tuple} -- (width, height) desired dimensions of the masks
-    Returns:
-        pol_list {list} -- list of shapely multipolygons
-    """
-
-    pol_list = list()
-    for img_path in msks_paths:
-        img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-        # image dimensions
-        h, w = img.shape
-        if (w, h) != out_dim:
-            img = cv2.resize(img, out_dim, interpolation=cv2.INTER_CUBIC)
-        polygon = mask_to_polygons(img)
-        pol_list.append(polygon)
-    return pol_list
-
-
-def mask_to_polygons(mask_img):
-    """
-    Converts segmentation mask to shapely multipolygon.
-    Adapted from: https://rocreguant.com/convert-a-mask-into-a-polygon-for-images-using-shapely-and-rasterio/1786/
-    """
-    all_polygons = list()
-
-    for shp, _ in shapes(
-        source=mask_img.astype(np.uint8),
-        mask=(mask_img > 0),
-        transform=Affine(1.0, 0, 0, 0, 1.0, 0),
-    ):
-        all_polygons.append(shape(shp))
-
-    all_polygons = MultiPolygon(all_polygons)
-
-    # Sometimes buffer() converts a simple Multipolygon to just a Polygon,
-    # need to keep it a Multipolygon throughout
-    if not all_polygons.is_valid:
-        all_polygons = all_polygons.buffer(0)
-        if all_polygons.type == "Polygon":
-            all_polygons = MultiPolygon([all_polygons])
-
-    return all_polygons
-
-
 def frames2video(
     img_list: List[str],
-    nome_ficheiro: str = "video",
+    file_name: str = "video",
     fps_: int = 25,
     title: str = "",
     frame_num_text: bool = False,
@@ -254,7 +217,7 @@ def frames2video(
 
     print("2. Creating video writer...")
     video = cv2.VideoWriter(
-        filename=nome_ficheiro + ".avi",
+        filename=file_name + ".avi",
         fourcc=cv2.VideoWriter_fourcc(*"mp4v"),
         fps=fps_,
         frameSize=size,

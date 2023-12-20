@@ -5,7 +5,12 @@ import tensorflow as tf
 from typing import Tuple
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+
+# logging.basicConfig(level=logging.DEBUG,
+
+# logggin only this module
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 # closed form kl loss computation between variational posterior q(z|x) and unit Gaussian prior p(z)

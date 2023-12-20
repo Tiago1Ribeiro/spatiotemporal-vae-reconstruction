@@ -1,8 +1,8 @@
 # Reconstructing Spatiotemporal Data with C-VAEs 
 
 ## To do list:
-- [ ] Testar CVAE refatorado (resolver problema com mse_kl_loss)
-- [ ] Incluir as U-Net samples no dataset!
+- [x] Testar CVAE refatorado (resolver problema com mse_kl_loss)
+- [ ] Incluir as U-Net samples no dataset (ZENODO v2)
 - [ ] Implementar os 4 modos de treino
 - [ ] Construir modelos alternativos ao CVAE do artigo ADBIS 2023
 - [ ] Adaptar código para facilmente mudar a configuração do dataset  
@@ -19,14 +19,14 @@ Summary here.
 - Python 3.10.
 
 
-## Operating System
+### Operating System
 
 This project has been tested on the following operating systems:
 
 - Pop! OS 22.04 LTS (Nvidia)
 - Windows 11
 
-## CUDA Versions
+### CUDA Versions
 
 HERE
 
