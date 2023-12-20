@@ -1,6 +1,5 @@
 # Directories
 dataset/
-src/data_
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -20,3 +19,7 @@ __pycache__/
 *.hdf5
 *.pt
 *.pth
+
+# files
+src/cvae_model.py
+src/cvae_model_v2.py

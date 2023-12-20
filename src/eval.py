@@ -5,11 +5,11 @@ Evaluation functions.
 """
 
 import numpy as np
-from typing import Optional
-import logger
+from typing import Optional, List
 
-from shapely.validation import make_valid
+from shapely.validation import make_valid, 
 from shapely.wkt import loads
+from shapely import Polygon
 
 from log_setup import logger
 
@@ -35,14 +35,14 @@ def iou_wkt(
 
     try:
         # Read WKTs files
-        print("Reading WKTs files...")
+        logger.info("Reading WKTs files...")
         with open(gt_wkt, "r") as f:
             ground_truth_wkt = f.read().splitlines()
 
         with open(model_wkt, "r") as f:
             pred_wkt = f.read().splitlines()
     except Exception as e:
-        print(f"Error reading WKT files: {e}")
+        logger.error(f"Error reading WKT files: {e}")
         return
 
     # Convert WKT lines to list of shapely polygons
@@ -50,8 +50,8 @@ def iou_wkt(
         ground_truth_polys = [loads(wkt) for wkt in ground_truth_wkt]
         model_polys = [loads(wkt) for wkt in pred_wkt]
     except Exception as e:
-        print(f"Error converting WKT to polygons: {e}")
-        return e
+        logger.error(f"Error converting WKT to polygons: {e}")
+        return
 
     # Select the first num_polygons polygons
     g_t_polys = ground_truth_polys[:num_polygons]
@@ -63,7 +63,7 @@ def iou_wkt(
         model_polys = [model_polys[i] for i in range(len(model_polys)) if i % 100 != 0]
 
     iou_list = []
-    print("Calculating IoU...")
+    logger.info("Calculating IoU...")
     for i in range(len(g_t_polys)):
         g_t_polys[i] = make_valid(g_t_polys[i])
         model_polys[i] = make_valid(model_polys[i])
@@ -115,7 +115,7 @@ def hausdorff_dist_wkt(
         model_polys = [loads(wkt) for wkt in model_wkt]
     except Exception as e:
         logger.error(f"Error converting WKT to polygons: {e}")
-        return
+        return e
 
     # Select the first last_frame polygons
     g_t_polys = ground_truth_polys[:last_frame]
@@ -138,3 +138,47 @@ def hausdorff_dist_wkt(
     hausdorff_dist_mean = sum(hausdorff_dist_list) / len(hausdorff_dist_list)
 
     return hausdorff_dist_mean, hausdorff_dist_list
+
+
+
+def strided_temporal_consistency(
+    polygons: List[Polygon], num_polygons: int, stride: int = 1, exp: bool = True
+) -> dict:
+    """
+    Calculates the temporal consistency between polygons in a sequence with a certain stride.
+
+    Parameters:
+    polygons (list): A list of Shapely Polygon objects representing the sequence of polygons.
+    num_polygons (int): The total number of polygons in the sequence.
+    stride (int, optional): The number of polygons to skip between comparisons. Defaults to 1.
+    exp (bool, optional): Whether to exponentiate the temporal consistency values. Defaults to True.
+
+    Returns:
+    dict: A dictionary containing the temporal consistency values and related information. The keys are:
+        - i (list): A list of the starting indices of the compared polygon pairs.
+        - strd (int): The stride value used.
+        - tc (list): A list of the temporal consistency values calculated for each pair of polygons.
+        - tc_mean (float): The mean temporal consistency value.
+    """
+
+    # Create empty dictionary to store the TC values and and indexes
+    t_c = {key: [] for key in ["i", "strd", "tc", "tc_mean"]}
+
+    # Make all polygons in the list valid before calculating temporal consistency
+    polygons = [make_valid(poly) for poly in polygons]
+
+    logger.info(f"Calculating the temporal consistency with stride {stride}...")
+    for i in range(0, num_polygons - stride):
+        # Calculates the temporal consistency between two consecutive polygons
+        t_c["i"].append(i)
+        tc_temp = 1 - (
+            polygons[i].difference(polygons[i + stride]).area
+            / polygons[i + stride].area
+        )
+        t_c["tc"].append(np.power(tc_temp, 10) if exp else tc_temp)
+
+    # Calculates the mean of the temporal consistency
+    t_c["tc_mean"] = np.mean(t_c["tc"])
+    t_c["strd"] = stride
+
+    return t_c
