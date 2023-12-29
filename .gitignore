@@ -21,9 +21,9 @@ __pycache__/
 *.pth
 
 # output folder WKT files
-output/*.wkt
+outputs/**/*.wkt
 
 # specific files
 src/cvae_model.py
 src/cvae_model_v2.py
-
+data/segs_unet_base.wkt
