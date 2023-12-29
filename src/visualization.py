@@ -10,33 +10,9 @@ plt.rcParams.update({"figure.max_open_warning": 0})
 from typing import List
 
 
-def plot_learning_curves(history, log_scale=True):
-    """
-    Plots learning curves for a trained model.
-
-    This function takes a History object as input and generates loss and accuracy
-    plots for the training and validation sets.
-
-    Parameters:
-    history (History): The history object obtained from the fit method of a keras Model instance.
-
-    Raises:
-    ValueError: If the history object does not contain 'loss' or 'accuracy' keys.
-
-    Example:
-    >>> history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=10)
-    >>> plot_learning_curves(history)
-    """
-    setup_plot(log_scale)
-    plot_loss(history)
-    plot_min_loss_points(history)
-    plot_learning_rate_changes(history)
-    plt.show()
-
-
-def setup_plot(log_scale=True):
+def setup_plot(log_scale=True, plt_title: str = "Learning Curves"):
     plt.figure(figsize=(15, 6))
-    plt.title("Learning Curves")
+    plt.title(plt_title)
     plt.grid(True, linestyle="-.", linewidth=0.3)
     if log_scale:
         plt.yscale("symlog")
@@ -100,6 +76,36 @@ def find_learning_rate_changes(history):
     ]
 
 
+def plot_learning_curves(
+    history: "keras.callbacks.History",
+    log_scale: bool = True,
+    plt_title: str = "Learning Curves",
+):
+    """
+    Plots learning curves for a trained model.
+
+    This function takes a History object as input and generates loss and accuracy
+    plots for the training and validation sets.
+
+    Parameters:
+    history (History): The history object obtained from the fit method of a keras Model instance.
+    log_scale (bool): Whether to use a logarithmic scale for the y-axis. Default is True.
+    plt_title (str): The title of the plot. Default is "Learning Curves".
+
+    Raises:
+    ValueError: If the history object does not contain 'loss' or 'accuracy' keys.
+
+    Example:
+    >>> history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=10)
+    >>> plot_learning_curves(history)
+    """
+    setup_plot(log_scale, plt_title)
+    plot_loss(history)
+    plot_min_loss_points(history)
+    plot_learning_rate_changes(history)
+    plt.show()
+
+
 def plot_generated_imgs(model, frames_num_list: List[int]):
     """
     Plots generated images from a trained model.
@@ -143,4 +149,63 @@ def plot_generated_imgs(model, frames_num_list: List[int]):
         axs[i].imshow(img)
         axs[i].set_title(f"Frame {frames_num_list[i]}")
 
+    plt.show()
+
+
+def create_boxplot(data, positions, colors):
+    """
+    Creates a boxplot using matplotlib.
+
+    Parameters:
+    data (dict): A dictionary where the keys are the names of the models and the values are another dictionary containing the 'ts' and 'pr' lists.
+    positions (dict): A dictionary specifying the positions for the bars.
+    colors (list): A list of colors for the boxes.
+
+    Returns:
+    None
+    """
+    # Set up the figure and axes
+    _, ax = plt.subplots(figsize=(10, 8))
+
+    # Function to set box colors
+    def set_box_colors(boxplot):
+        """
+        Sets the colors for the boxes in the boxplot.
+        """
+        for patch, color in zip(boxplot["boxes"], colors):
+            patch.set_facecolor(color)
+
+    # Create boxplots
+    for key, pos in positions.items():
+        boxplot = ax.boxplot(
+            [data[name][key] for name in data],
+            positions=pos,
+            medianprops={"linewidth": 1, "color": "orange"},
+            showfliers=False,
+            flierprops=dict(markerfacecolor="r", markersize=2),
+            patch_artist=True,
+        )
+        set_box_colors(boxplot)
+
+    # Add dashed gridlines for y axis ONLY
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5)
+
+    # x labels
+    ax.set_xticks([1.5, 3.25])
+    ax.set_xticklabels(["Test Set", "U-NET"])
+
+    # Increase font size
+    ax.tick_params(axis="both", which="major", labelsize=14)
+
+    # Add legend for each model, font size 14
+    ax.legend(
+        [boxplot["boxes"][i] for i in range(len(data))],
+        list(data.keys()),
+        fontsize=14,
+    )
+
+    # Add y label
+    ax.set_ylabel("Haussdorf Distance", fontsize=14)
+
+    # Show the plot
     plt.show()

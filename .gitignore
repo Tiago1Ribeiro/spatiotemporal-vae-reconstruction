@@ -20,6 +20,10 @@ __pycache__/
 *.pt
 *.pth
 
-# files
+# output folder WKT files
+output/*.wkt
+
+# specific files
 src/cvae_model.py
 src/cvae_model_v2.py
+

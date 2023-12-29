@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import cv2
+import time
 import numpy as np
 from rasterio.features import shapes
 from rasterio import Affine
@@ -19,11 +20,13 @@ def masks_to_polygons(
     out_dim (tuple): The desired dimensions of the masks. Default is (512, 512).
     save_path (str): Optional. If provided, the function saves the polygons to a WKT file.
 
-
     Returns:
     list: A list of shapely multipolygons.
     """
+    start_time = time.time()
+
     pol_list = list()
+    i = 0
     for img_path in msks_paths:
         img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
         h, w = img.shape
@@ -31,9 +34,17 @@ def masks_to_polygons(
             img = cv2.resize(img, out_dim, interpolation=cv2.INTER_CUBIC)
         polygon = mask_to_poly(img)
         pol_list.append(polygon)
+        i += 1
 
+        elapsed_time = time.time() - start_time
+        print(
+            f"Processed {i} masks out of {len(msks_paths)} | "
+            f"Time elapsed: {elapsed_time:.2f}s  ",
+            end="\r",
+        )
     if save_path:
         save_polygons_to_wkt(pol_list, save_path)
+        print(f"Saved polygons to {save_path}")
 
     return pol_list
 
@@ -61,7 +72,7 @@ def mask_to_poly(mask_img: np.ndarray) -> MultiPolygon:
 
     if not all_polygons.is_valid:
         all_polygons = all_polygons.buffer(0)
-        if all_polygons.type == "Polygon":
+        if all_polygons.geom_type == "Polygon":
             all_polygons = MultiPolygon([all_polygons])
 
     return all_polygons

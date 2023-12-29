@@ -15,6 +15,7 @@ CVAE:
 data:
   train_wkt: dataset/BurnedAreaUAV_dataset/WKT/train_valid.wkt
   test_wkt: dataset/BurnedAreaUAV_dataset/WKT/test.wkt
+  unet_wkt: ~/unet.wkt
   train_dir: data/train
   test_dir: data/test
   train_sampled_dir: data/train_sampled
@@ -27,9 +28,9 @@ data:
 
 outputs: 
   interpol:
-    full: interpol/full
-    sampled: interpol/sampled
+    full: outputs/interpol/full
+    sampled: outputs/interpol/sampled
   extrapol:
-    full: extrapol/full
-    sampled: extrapol/sampled
+    full: outputs/extrapol/full
+    sampled: outputs/extrapol/sampled
 

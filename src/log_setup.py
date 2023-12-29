@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Logging configuration file.
+Logging configuration file. Log messages are written to a file and printed to the console.
+
+Usage:
+    from log_setup import logger
+    logger.info("This is a log message.")
+    
 """
 
 import logging

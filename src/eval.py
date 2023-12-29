@@ -7,8 +7,9 @@ Evaluation functions.
 import numpy as np
 from typing import Optional, List
 
-from shapely.validation import make_valid, 
+from shapely.validation import make_valid
 from shapely.wkt import loads
+from shapely import hausdorff_distance
 from shapely import Polygon
 
 from log_setup import logger
@@ -83,7 +84,7 @@ def hausdorff_dist_wkt(
     model_wkt: str,
     last_frame: Optional[int] = 22500,
     discard_100: bool = False,
-) -> float:
+) -> tuple:
     """
     Calculates the Hausdorff distance between the ground truth and the model.
 
@@ -94,7 +95,7 @@ def hausdorff_dist_wkt(
     discard_100 (bool): Whether to discard polygons which index number is multiple of 100. Defaults to False.
 
     Returns:
-    float: The mean Hausdorff distance between the polygons.
+    tuple: A tuple containing the mean Hausdorff distance and the list of individual Hausdorff distances.
     """
 
     try:
@@ -139,6 +140,39 @@ def hausdorff_dist_wkt(
 
     return hausdorff_dist_mean, hausdorff_dist_list
 
+
+# def wkt_hausdorff_distance(ground_truth_wkt: List[str], eval_wkt: List[str]) -> tuple:
+#     """
+#     Calculate the Hausdorff distance between two sets of polygons.
+
+#     Parameters:
+#         ground_truth_wkt (List[str]): List of Well-Known Text (WKT) representations of polygons.
+#         eval_wkt (List[str]): List of Well-Known Text (WKT) representations of polygons.
+
+#     Returns:
+#         tuple: Tuple containing the mean Hausdorff distance and the list of individual Hausdorff distances.
+#     """
+#     # Load the polygons from the WKT representations
+#     model_polygons = [loads(wkt) for wkt in eval_wkt]
+#     ground_truth_polygons = [loads(wkt) for wkt in ground_truth_wkt]
+
+#     # Ensure that the polygons are valid
+#     ground_truth_polygons = [make_valid(polygon) for polygon in ground_truth_polygons]
+#     model_polygons = [make_valid(polygon) for polygon in model_polygons]
+
+#     # Calculate the Hausdorff distances
+#     hausdorff_distances = []
+#     for gt_poly, model_poly in zip(ground_truth_polygons, model_polygons):
+#         try:
+#             hausdorff_dist = gt_poly.hausdorff_distance(model_poly)
+#             hausdorff_distances.append(hausdorff_dist)
+#         except Exception as e:
+#             print(f"Error calculating Hausdorff distance: {e}")
+
+#     # Calculate the mean Hausdorff distance
+#     mean_hausdorff_dist = np.mean(hausdorff_distances) if hausdorff_distances else None
+
+#     return mean_hausdorff_dist, hausdorff_distances
 
 
 def strided_temporal_consistency(

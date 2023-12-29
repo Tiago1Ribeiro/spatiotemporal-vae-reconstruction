@@ -4,6 +4,7 @@ Utility functions for the project.
 import os
 import re
 import numpy as np
+import pickle
 
 # from glob import glob
 # import yaml
@@ -269,3 +270,35 @@ def frame_to_label(frame, max_frame=22500):
     # Expand the dimensions of the label to make it compatible with the model
     label = np.expand_dims(label, axis=0)
     return label
+
+
+def label_to_frame(label, max_frame=22500):
+    """
+    Label decoding function. It converts the normalized frame number to an absolute frame number.
+
+    Parameters:
+    label (np.array): The normalized frame number as a 0 to 1 value float32.
+    max_frame (int): The maximum frame number. Default is 22500.
+
+    Returns:
+    int: The absolute frame number.
+    """
+    # Convert the label to an absolute frame number
+    frame = int(label * max_frame)
+    return frame
+
+
+def save_history(history, path):
+    """
+    Save the Keras training history to a file.
+
+    Parameters:
+    - history (History): The Keras History object to save.
+    - path (str): The path where the history should be saved.
+    """
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+
+    # Save the history
+    with open(path, "wb") as f:
+        pickle.dump(history.history, f)
