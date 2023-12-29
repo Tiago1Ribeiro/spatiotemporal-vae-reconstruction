@@ -1,6 +1,7 @@
 # Reconstructing Spatiotemporal Data with C-VAEs 
 
 ## To do list:
+
 - [x] Testar CVAE refatorado (resolver problema com mse_kl_loss)
 - [ ] Incluir as U-Net samples no dataset (ZENODO v2)
 - [ ] Implementar os 4 modos de treino
@@ -49,3 +50,16 @@ pip install -r requirements.txt
 zenodo_get --output dataset 10.5281/zenodo.7944963 # or dowload it from the link below
 ```
 
+### Dataset Citation
+
+```bibtex
+@misc{ba_uav_dataset,
+  author       = {Ribeiro, Tiago F. R. and Silva, Fernando and Moreira, Jos\'e and Costa, Ro\'erio Lu\'is de C.},
+  title        = {BurnedAreaUAV Dataset (v1.1)},
+  month        = may,
+  year         = 2023,
+  publisher    = {Zenodo},
+  version      = {1.1},
+  doi          = {10.5281/zenodo.7944963},
+}
+```
