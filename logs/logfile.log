@@ -22510,3 +22510,27 @@
 2023-12-30 12:33:06,094 - logger - INFO - Creating image list...                          
 2023-12-30 12:35:43,804 - logger - INFO - Creating image list...                          
 2023-12-30 12:42:06,933 - logger - INFO - Creating image list...                          
+2023-12-30 12:43:13,724 - logger - INFO - Writing frames to file 1/22500
+2023-12-30 12:43:21,670 - logger - INFO - Writing frames to file 1001/22500
+2023-12-30 12:43:29,584 - logger - INFO - Writing frames to file 2001/22500
+2023-12-30 12:43:37,429 - logger - INFO - Writing frames to file 3001/22500
+2023-12-30 12:43:45,199 - logger - INFO - Writing frames to file 4001/22500
+2023-12-30 12:43:53,124 - logger - INFO - Writing frames to file 5001/22500
+2023-12-30 12:44:00,898 - logger - INFO - Writing frames to file 6001/22500
+2023-12-30 12:44:08,899 - logger - INFO - Writing frames to file 7001/22500
+2023-12-30 12:44:16,855 - logger - INFO - Writing frames to file 8001/22500
+2023-12-30 12:44:24,846 - logger - INFO - Writing frames to file 9001/22500
+2023-12-30 12:44:32,834 - logger - INFO - Writing frames to file 10001/22500
+2023-12-30 12:44:40,907 - logger - INFO - Writing frames to file 11001/22500
+2023-12-30 12:44:48,945 - logger - INFO - Writing frames to file 12001/22500
+2023-12-30 12:44:56,982 - logger - INFO - Writing frames to file 13001/22500
+2023-12-30 12:45:04,987 - logger - INFO - Writing frames to file 14001/22500
+2023-12-30 12:45:12,939 - logger - INFO - Writing frames to file 15001/22500
+2023-12-30 12:45:20,041 - logger - INFO - Writing frames to file 16001/22500
+2023-12-30 12:45:24,694 - logger - INFO - Writing frames to file 17001/22500
+2023-12-30 12:45:29,369 - logger - INFO - Writing frames to file 18001/22500
+2023-12-30 12:45:34,030 - logger - INFO - Writing frames to file 19001/22500
+2023-12-30 12:45:38,658 - logger - INFO - Writing frames to file 20001/22500
+2023-12-30 12:45:43,316 - logger - INFO - Writing frames to file 21001/22500
+2023-12-30 12:45:47,899 - logger - INFO - Writing frames to file 22001/22500
+2023-12-30 12:45:50,217 - logger - INFO - Saved video to /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/full/video_full_extrapol.mp4
