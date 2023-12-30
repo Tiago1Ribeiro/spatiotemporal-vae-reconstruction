@@ -24,11 +24,11 @@ file_handler = logging.FileHandler("../logs/logfile.log")
 stream_handler = logging.StreamHandler()
 
 # Create a formatter and add it to the handlers
-formatter = logging.Formatter(
-    "%(asctime)s - %(name)s -12s %(levelname)s -8s %(message)s"
-)
-file_handler.setFormatter(formatter)
-stream_handler.setFormatter(formatter)
+format_log = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+format_console = logging.Formatter("%(levelname)s - %(message)s")
+
+file_handler.setFormatter(format_log)
+stream_handler.setFormatter(format_console)
 
 # Add the handlers to the logger
 logger.addHandler(file_handler)

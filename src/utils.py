@@ -4,13 +4,14 @@ Utility functions for the project.
 import os
 import re
 import numpy as np
-import pickle
 
 # from glob import glob
 # import yaml
 import cv2
+import pandas as pd
 from tqdm import tqdm
-from typing import List
+from typing import Tuple
+from log_setup import logger
 
 
 # def load_config(config_path):
@@ -171,87 +172,104 @@ def frame_to_label(frame: int, max_frame: int = 22500) -> np.array:
     return label
 
 
-def frames2video(
-    img_list: List[str],
+def frames_to_video(
+    img_list_dir: str,
+    output_dir: str = "",
+    output_resolution: Tuple[int, int] = (800, 600),
     file_name: str = "video",
-    fps_: int = 25,
+    f_ps: int = 25,
     title: str = "",
     frame_num_text: bool = False,
     font_size: int = 1,
 ) -> None:
     """
-    Converts a list of images into an AVI file with the same resolution as the first image in the list.
+    Converts a list of images into an MP4 file with the same resolution as the first image in the list.
 
     Parameters:
-    img_list (List[str]): A list of image file paths.
-    nome_ficheiro (str): The name of the video file. Default is "video".
-    fps_ (int): The frames per second. Default is 25.
-    title (str): The title of the video. Default is an empty string.
-    frame_num_text (bool): Whether to add frame numbers to the video. Default is False.
-    font_size (int): The font size of the frame numbers. Default is 1.
-
-    Returns:
-    None
+        img_list_dir (str): The path to the directory containing the images.
+        output_dir (str): The path to the directory where the video will be saved. Default is the current directory.
+        output_resolution (tuple): The resolution of the output video. Default is (800, 600).
+        file_name (str): The name of the video file. Default is "video".
+        f_ps (int): The frames per second. Default is 25.
+        title (str): The title of the video. Default is an empty string.
+        frame_num_text (bool): Whether to add frame numbers to the video. Default is False.
+        font_size (int): The font size of the frame numbers. Default is 1.
 
     Side effects:
-    Saves the video in the current directory.
+        Saves the MP4 video in the specified output directory.
+
+    Example Usage:
+        frames_to_video(img_list_dir="path/to/images", output_dir="path/to/output", file_name="output_video", output_resolution=(800, 600))
     """
+
+    logger.info("Creating image list...                          ")
+    img_list = sorted(
+        [
+            os.path.join(img_list_dir, filename)
+            for filename in os.listdir(img_list_dir)
+            if filename.lower().endswith((".png", ".jpg", ".jpeg"))
+        ]
+    )
+
     # Check if the image files exist and are valid images
     for img_file in img_list:
         if not os.path.isfile(img_file):
-            raise ValueError(f"File {img_file} does not exist.")
+            logger.error(f"File {img_file} does not exist.")
+            continue
         img = cv2.imread(img_file)
         if img is None:
-            raise ValueError(f"File {img_file} is not a valid image.")
+            logger.error(f"File {img_file} is not a valid image.")
+            continue
 
     # Save the dimensions of the first image
     img = cv2.imread(img_list[0])
     height, width, _ = img.shape
-    size = (width, height)
+    input_size = (width, height)
     num_frames = len(img_list)
 
-    img_array = list()
-    for i in range(len(img_list)):
-        img = cv2.imread(img_list[i])
-        img_array.append(img)
-        print(f"1. Appending frames {i+1}/{num_frames}", end="\r")
+    output_path = os.path.join(output_dir, file_name + ".mp4")
 
-    print("2. Creating video writer...")
     video = cv2.VideoWriter(
-        filename=file_name + ".avi",
+        filename=output_path,
         fourcc=cv2.VideoWriter_fourcc(*"mp4v"),
-        fps=fps_,
-        frameSize=size,
+        fps=f_ps,
+        frameSize=output_resolution,
     )
-
-    for i in range(len(img_array)):
-        if frame_num_text:
-            frame_number_text = f"frame_{i:06d}"
-            cv2.putText(
-                img_array[i],
-                frame_number_text,
-                (width - 300, 50),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                font_size,
-                (255, 100, 100),
-                2,
-                cv2.LINE_AA,
-            )
-        if title:
-            cv2.putText(
-                img_array[i],
-                title,
-                (50, 50),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                font_size,
-                (255, 255, 255),
-                2,
-                cv2.LINE_AA,
-            )
-
-        video.write(img_array[i])
-        print(f"3. Writing frames to file {i+1}/{num_frames}    ", end="\r")
-    video.release()
+    try:
+        for i, img_file in enumerate(img_list):
+            img = cv2.imread(img_file)
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+            if output_resolution != input_size:
+                img = cv2.resize(img, output_resolution, cv2.INTER_LANCZOS4)
+            if frame_num_text:
+                frame_number_text = f"Frame: {i:06d}/{num_frames:06d}"
+                cv2.putText(
+                    img,
+                    frame_number_text,
+                    (50, 100),
+                    cv2.FONT_HERSHEY_DUPLEX,
+                    font_size,
+                    (255, 200, 200),
+                    2,
+                    cv2.LINE_AA,
+                )
+            if title:
+                cv2.putText(
+                    img,
+                    title,
+                    (50, 50),
+                    cv2.FONT_HERSHEY_DUPLEX,
+                    font_size,
+                    (255, 200, 200),
+                    2,
+                    cv2.LINE_AA,
+                )
+            video.write(img)
+            if i % 1000 == 0:
+                logger.info(f"Writing frames to file {i+1}/{num_frames}")
+    finally:
+        video.release()
+        logger.info(f"Saved video to {output_path}")
 
 
 def frame_to_label(frame, max_frame=22500):
@@ -290,7 +308,7 @@ def label_to_frame(label, max_frame=22500):
 
 def save_history(history, path):
     """
-    Save the Keras training history to a file.
+    Save the Keras training history to CSV file
 
     Parameters:
     - history (History): The Keras History object to save.
@@ -299,6 +317,12 @@ def save_history(history, path):
     # Ensure the directory exists
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
-    # Save the history
-    with open(path, "wb") as f:
-        pickle.dump(history.history, f)
+    # Convert the history object to a dictionary
+    history_dict = dict()
+    for key in history.history.keys():
+        history_dict[key] = history.history[key]
+
+    # Save the history to a CSV file
+    df = pd.DataFrame(history_dict)
+    df.to_csv(path, index=False)
+    print(f"Saved history to {path}")
