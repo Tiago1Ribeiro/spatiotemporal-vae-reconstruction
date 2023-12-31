@@ -14,23 +14,76 @@ from typing import Tuple
 from log_setup import logger
 
 
-# def load_config(config_path):
-#     """
-#     Loads a YAML configuration file.
-#     Parameters:
-#         config_path {str} -- path to the YAML configuration file
-#     Returns:
-#         config {dict} -- dictionary with the configuration parameters
-#     """
-#     with open(config_path, "r", encoding="utf-8") as stream:
-#         try:
-#             config = yaml.safe_load(stream)
-#             return config
-#         except yaml.YAMLError as exc:
-#             print(exc)
+def draw_mask(points, orig_dims, width, height):
+    """
+    Draws a mask given a set of points, original dimensions, and desired dimensions.
+    Parameters:
+        points {list} -- list of points
+        orig_dims {tuple} -- original dimensions of the masks
+        width {int} -- desired width of the masks
+        height {int} -- desired height of the masks
+    Returns:
+        A resized mask
+    """
+    # create empty mask
+    mask = np.zeros(orig_dims, dtype=np.uint8)
+    # create array with polygon points, with 2 columns (x,y)
+    arr = np.array(points, dtype=np.int32).reshape((-1, 2))
+    # draw mask
+    cv2.drawContours(
+        image=mask,
+        contours=[arr],
+        contourIdx=-1,
+        color=(255, 255, 255),
+        thickness=-1,  # if > 0, thickness of the contour; if -1, fill object
+        lineType=cv2.LINE_AA,
+    )
+    # resize frames with Lanczos interpolation
+    return cv2.resize(mask, (width, height), interpolation=cv2.INTER_LANCZOS4)
 
 
-def wkt2masc(wkt_file, images_path, orig_dims, height, width):
+def wkt_to_masc(
+    wkt_file: str, images_path: str, orig_dims: Tuple[int, int], height: int, width: int
+) -> None:
+    """
+    Converts WKT files to segmentation masks.
+
+    Parameters:
+        wkt_file {str} -- path to the WKT file
+        images_path {str} -- path to the folder where the masks will be saved
+        orig_dims {tuple} -- original dimensions of the masks (H, W)
+        height {int} -- desired height of the masks
+        width {int} -- desired width of the masks
+    Returns:
+        Creates PNG images of the masks
+    """
+
+    wkt = open(wkt_file, "r", encoding="utf-8")
+    num_lines = len(wkt.readlines())
+    cnt = 0
+
+    logger.info(
+        f"Mask Properties: Width: {width}, Height: {height}, No. of masks: {num_lines}"
+    )
+
+    pbar = tqdm(total=num_lines)
+
+    # process each line of the WKT file
+    with open(wkt_file, encoding="utf-8") as f:
+        for line in f:
+            # extract numbers from the line
+            points = [int(s) for s in re.findall("[0-9]+", line)]
+            # draw mask
+            mask_resized = draw_mask(points, orig_dims, width, height)
+            # save mask as PNG image
+            cv2.imwrite(os.path.join(images_path, f"mask_{cnt:06d}.png"), mask_resized)
+            cnt += 1
+            pbar.update(1)
+
+    pbar.close()
+
+
+def wkt_to_masc(wkt_file, images_path, orig_dims, height, width):
     """
     Converts WKT files to segmentation masks.
     Parameters:
@@ -47,7 +100,7 @@ def wkt2masc(wkt_file, images_path, orig_dims, height, width):
     num_lines = len(wkt.readlines())
     cnt = 0
 
-    print(
+    logger.info(
         f"""
     {'-'*38}
     # \033[1mProperties of the resulting masks\033[0m

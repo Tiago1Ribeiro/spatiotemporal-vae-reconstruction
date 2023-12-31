@@ -3,8 +3,10 @@
 ## To do list:
 
 - [x] Testar CVAE refatorado (resolver problema com mse_kl_loss)
-- [ ] Incluir as U-Net samples no dataset (ZENODO v2)
-- [ ] Implementar os 4 modos de treino
+- [x] Implementar os 4 modos de treino
+- [ ] Testar com menos amostras de treino
+- [ ] Gerar WKTs para os vários modelos
+- [ ] Incluir as *U-Net samples (Base, RED, 3D)* e *sampled_masks.txt* no dataset (ZENODO v2)
 - [ ] Construir modelos alternativos ao CVAE do artigo ADBIS 2023
 - [ ] Adaptar código para facilmente mudar a configuração do dataset  
       (total, amostrado, total extrapolação, amostrado extrapolação)
