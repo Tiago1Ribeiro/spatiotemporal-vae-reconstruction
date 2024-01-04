@@ -15,7 +15,7 @@ import logging
 logger = logging.getLogger("logger")
 
 # Set the level of the logger
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 # Create a file handler
 file_handler = logging.FileHandler("../logs/logfile.log")

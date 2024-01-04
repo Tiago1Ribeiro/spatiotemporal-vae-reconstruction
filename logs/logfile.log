@@ -61,3 +61,28 @@
     # Number of masks to create: 13
     --------------------------------------
     
+2024-01-04 14:14:26,468 - logger - INFO - Data: full, Mode: interpol, Model: CVAE, Percentage: 70, Output PNG directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/interpol/full
+2024-01-04 14:14:58,081 - logger - INFO - Data: full, Mode: interpol, Model: CVAE, Percentage: 70%,
+ Output PNG directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/interpol/full
+2024-01-04 14:15:01,738 - logger - INFO - Data: full, Mode: interpol, Model: CVAE, Percentage: 70%,
+Output PNG directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/interpol/full
+2024-01-04 14:15:15,386 - logger - INFO - Data: full, Mode: interpol, Model: CVAE, Percentage: 70%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/interpol/full
+2024-01-04 14:16:05,780 - logger - INFO - Data: full, Mode: interpol, Model: CVAE, Percentage: 70%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/interpol/full
+2024-01-04 14:16:24,392 - logger - INFO - Data: full, Mode: interpol, Model: CVAE, Percentage: 70%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/interpol/full
+2024-01-04 14:16:45,334 - logger - INFO - Data: full, Mode: interpol, Model: CVAE,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/interpol/full
+2024-01-04 14:17:00,209 - logger - INFO - Data: full, Mode: interpol, Model: CVAE
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/interpol/full
+2024-01-04 14:25:04,626 - logger - INFO - Data: full, Mode: interpol, Model: CVAE
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/interpol/full
+2024-01-04 14:26:41,745 - logger - INFO - Data: full, Mode: extrapol, Model: CVAE Percentage: 70%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/full
+2024-01-04 14:42:48,454 - logger - INFO - Data: full, Mode: extrapol, Model: CVAE Percentage: 90%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/90/full
+2024-01-04 14:44:32,059 - logger - INFO - Data: sampled, Mode: extrapol, Model: CVAE Percentage: 90%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/90/sampled
+2024-01-04 14:48:18,965 - logger - INFO - Data: sampled, Mode: extrapol, Model: CVAE Percentage: 70%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/sampled

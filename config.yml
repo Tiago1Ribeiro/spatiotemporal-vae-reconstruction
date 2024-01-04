@@ -28,9 +28,9 @@ data:
 
 outputs: 
   interpol:
-    full: outputs/interpol/full
-    sampled: outputs/interpol/sampled
+    full: interpol/full
+    sampled: interpol/sampled
   extrapol:
-    full: outputs/extrapol/full
-    sampled: outputs/extrapol/sampled
+    full: extrapol/full
+    sampled: extrapol/sampled
 
