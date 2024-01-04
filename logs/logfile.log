@@ -1,45 +1,4 @@
-2023-12-31 16:46:28,807 - logger - INFO - 
-    --------------------------------------
-    # [1mProperties of the resulting masks[0m
-    # Width: 512, Height: 512
-    # Number of masks to create: 226
-    --------------------------------------
-    
-2023-12-31 16:46:29,202 - logger - INFO - 
-    --------------------------------------
-    # [1mProperties of the resulting masks[0m
-    # Width: 512, Height: 512
-    # Number of masks to create: 23
-    --------------------------------------
-    
-2023-12-31 16:46:29,245 - logger - INFO - 
-    --------------------------------------
-    # [1mProperties of the resulting masks[0m
-    # Width: 512, Height: 512
-    # Number of masks to create: 13
-    --------------------------------------
-    
-2023-12-31 16:49:33,800 - logger - INFO - 
-    --------------------------------------
-    # [1mProperties of the resulting masks[0m
-    # Width: 512, Height: 512
-    # Number of masks to create: 226
-    --------------------------------------
-    
-2023-12-31 16:49:34,166 - logger - INFO - 
-    --------------------------------------
-    # [1mProperties of the resulting masks[0m
-    # Width: 512, Height: 512
-    # Number of masks to create: 23
-    --------------------------------------
-    
-2023-12-31 16:49:34,211 - logger - INFO - 
-    --------------------------------------
-    # [1mProperties of the resulting masks[0m
-    # Width: 512, Height: 512
-    # Number of masks to create: 13
-    --------------------------------------
-    
+
 2023-12-31 16:49:52,751 - logger - INFO - 
     --------------------------------------
     # [1mProperties of the resulting masks[0m
@@ -119,3 +78,30 @@ Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/ou
 Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/90/sampled
 2024-01-04 15:37:38,636 - logger - INFO - Data: sampled, Mode: extrapol, Model: CVAE Percentage: 90%,
 Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/90/sampled
+2024-01-04 16:00:18,399 - logger - INFO - Creating image list...                          
+2024-01-04 16:00:37,512 - logger - INFO - Writing frames to file 1/22500
+2024-01-04 16:00:42,526 - logger - INFO - Writing frames to file 1001/22500
+2024-01-04 16:00:47,245 - logger - INFO - Writing frames to file 2001/22500
+2024-01-04 16:00:51,994 - logger - INFO - Writing frames to file 3001/22500
+2024-01-04 16:00:56,690 - logger - INFO - Writing frames to file 4001/22500
+2024-01-04 16:01:01,445 - logger - INFO - Writing frames to file 5001/22500
+2024-01-04 16:01:06,570 - logger - INFO - Writing frames to file 6001/22500
+2024-01-04 16:01:11,359 - logger - INFO - Writing frames to file 7001/22500
+2024-01-04 16:01:16,138 - logger - INFO - Writing frames to file 8001/22500
+2024-01-04 16:01:21,257 - logger - INFO - Writing frames to file 9001/22500
+2024-01-04 16:01:26,168 - logger - INFO - Writing frames to file 10001/22500
+2024-01-04 16:01:30,903 - logger - INFO - Writing frames to file 11001/22500
+2024-01-04 16:01:35,599 - logger - INFO - Writing frames to file 12001/22500
+2024-01-04 16:01:40,343 - logger - INFO - Writing frames to file 13001/22500
+2024-01-04 16:01:45,051 - logger - INFO - Writing frames to file 14001/22500
+2024-01-04 16:01:49,809 - logger - INFO - Writing frames to file 15001/22500
+2024-01-04 16:01:54,566 - logger - INFO - Writing frames to file 16001/22500
+2024-01-04 16:01:59,336 - logger - INFO - Writing frames to file 17001/22500
+2024-01-04 16:02:04,049 - logger - INFO - Writing frames to file 18001/22500
+2024-01-04 16:02:08,844 - logger - INFO - Writing frames to file 19001/22500
+2024-01-04 16:02:13,631 - logger - INFO - Writing frames to file 20001/22500
+2024-01-04 16:02:18,368 - logger - INFO - Writing frames to file 21001/22500
+2024-01-04 16:02:23,069 - logger - INFO - Writing frames to file 22001/22500
+2024-01-04 16:02:25,403 - logger - INFO - Saved video to /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/90/sampled/video_sampled_extrapol_90.mp4
+2024-01-04 16:03:31,536 - logger - INFO - Data: full, Mode: extrapol, Model: CVAE Percentage: 90%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/90/full
