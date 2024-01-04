@@ -378,6 +378,4 @@ def save_history(history, path):
     # Save the history to a CSV file
     df = pd.DataFrame(history_dict)
     df.to_csv(path, index=False)
-    print(f"Saved history to {path}")
-
-
+    logger.info(f"Saved history to {path}")

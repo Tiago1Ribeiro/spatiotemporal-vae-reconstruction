@@ -27,6 +27,13 @@ outputs/**/*.wkt
 src/cvae_model.py
 src/cvae_model_v2.py
 data/segs_unet_base.wkt
+notebooks/conditional_difusion_models.ipynb
+notebooks/notas_outro_modelo.ipynb
+notebooks/2_1_CVAE_interpol.ipynb
+src/datapreprocessing.ipynb
+src/data_preprocessing.py
+src/cvae_model.py
+src/cvae_model_v2.py
 
 # Video files
 *.mp4

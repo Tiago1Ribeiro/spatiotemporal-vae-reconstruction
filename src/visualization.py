@@ -80,6 +80,7 @@ def plot_learning_curves(
     history: "keras.callbacks.History",
     log_scale: bool = True,
     plt_title: str = "Learning Curves",
+    save_fig: bool = False,
 ):
     """
     Plots learning curves for a trained model.
@@ -104,6 +105,8 @@ def plot_learning_curves(
     plot_min_loss_points(history)
     plot_learning_rate_changes(history)
     plt.show()
+    if save_fig:
+        plt.savefig(plt_title)
 
 
 def plot_generated_imgs(model, frames_num_list: List[int]):
