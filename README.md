@@ -4,7 +4,7 @@
 
 - [x] Testar CVAE refatorado (resolver problema com mse_kl_loss)
 - [x] Implementar os 4 modos de treino
-- [ ] Testar com menos amostras de treino
+- [x] Testar com menos amostras de treino
 - [ ] Gerar WKTs para os vários modelos
 - [ ] Incluir as *U-Net samples (Base, RED, 3D)* e *sampled_masks.txt* no dataset (ZENODO v2)
 - [ ] Construir modelos alternativos ao CVAE do artigo ADBIS 2023
