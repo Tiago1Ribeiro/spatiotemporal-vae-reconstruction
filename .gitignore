@@ -35,6 +35,7 @@ src/data_preprocessing.py
 src/cvae_model.py
 src/cvae_model_v2.py
 main.py
+src/tests.py
 
 # Video files
 *.mp4
