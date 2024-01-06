@@ -4,6 +4,7 @@ Utility functions for the project.
 import os
 import re
 import numpy as np
+import tensorflow as tf
 
 # from glob import glob
 # import yaml
@@ -162,11 +163,87 @@ def wkt_to_masc(wkt_file, images_path, orig_dims, height, width):
 #     return images_array
 
 
-def load_images_from_folder(folder_path, target_size=(256, 256)):
+# @tf.function  # decorator to make the function callable by TensorFlow
+# def load_preprocess_mask(
+#     mask_path: tf.Tensor,
+#     label: tf.Tensor,
+#     output_dims: tf.Tensor = tf.constant((256, 256)),
+#     last_frame: int = 22500,
+# ) -> tf.Tensor:
+#     """
+#     Loads and preprocesses a mask image.
+#     Parameters:
+#         mask_path {tf.Tensor} -- path to the mask image
+#         label {tf.Tensor} -- label of the mask
+#         output_dims {tf.Tensor} -- desired dimensions of the mask
+#         last_frame {int} -- last frame number
+#     Returns:
+#         A tuple containing the mask and the label
+#     """
+
+#     # Read and decode the image
+#     mask = tf.io.read_file(mask_path)
+#     mask = tf.image.decode_png(mask, channels=1)
+
+#     # Resize the image
+#     mask = tf.image.resize(mask, output_dims)
+
+#     # Normalize the mask
+#     mask = tf.math.divide(mask, 127.5) - 1
+
+#     # Normalize the label
+#     label = tf.math.divide(label, last_frame)
+#     label = tf.expand_dims(label, axis=-1)
+#     # Cast to float32
+#     label = tf.cast(label, tf.float32)
+
+#     return mask, label
+
+
+# def load_preprocess_mask(
+#     mask_path: str,
+#     label: float,
+#     output_dims: tuple = (256, 256),
+#     last_frame: int = 22500,
+# ) -> np.ndarray:
+#     """
+#     Loads and preprocesses a mask image.
+#     Parameters:
+#         mask_path {str} -- path to the mask image
+#         label {float} -- label of the mask
+#         output_dims {tuple} -- desired dimensions of the mask
+#         last_frame {int} -- last frame number
+#     Returns:
+#         A tuple containing the mask and the label
+#     """
+
+#     # Check if the file exists
+#     if not os.path.exists(mask_path):
+#         raise FileNotFoundError(f"No such file: '{mask_path}'")
+
+#     # Read and decode the image
+#     mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
+
+#     # Resize the image
+#     mask = cv2.resize(mask, output_dims)
+
+#     # Normalize the mask
+#     mask = (mask / 127.5) - 1
+
+#     # Normalize the label
+#     label = label / last_frame
+#     label = np.expand_dims(label, axis=-1)
+
+#     return mask, label
+
+
+def load_images_from_folder(
+    dir: str, target_size: Tuple[int, int] = (256, 256)
+) -> np.array:
     """
     Loads all images from a folder into a numpy array.
     Parameters:
-        folder_path {str} -- path to the folder containing the images
+        dir {str} -- path to the folder containing the images
         target_size {tuple} -- desired dimensions of the images
     Returns:
         images {numpy.ndarray} -- numpy array containing the images (N, H, W, 1)
@@ -175,13 +252,13 @@ def load_images_from_folder(folder_path, target_size=(256, 256)):
     images = []
 
     # Check if the folder exists
-    if not os.path.exists(folder_path):
-        print(f"Error: Folder '{folder_path}' not found.")
+    if not os.path.exists(dir):
+        print(f"Error: Folder '{dir}' not found.")
         return images
 
     # Loop through all files in the folder
-    for filename in sorted(os.listdir(folder_path)):
-        file_path = os.path.join(folder_path, filename)
+    for filename in sorted(os.listdir(dir)):
+        file_path = os.path.join(dir, filename)
 
         # Check if the file is a valid image
         if os.path.isfile(file_path) and filename.lower().endswith(
