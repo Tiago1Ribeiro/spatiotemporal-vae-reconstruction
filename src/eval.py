@@ -5,7 +5,7 @@ Evaluation functions.
 """
 
 import numpy as np
-from typing import Optional, List
+from typing import Optional, List, Dict
 
 from shapely.validation import make_valid
 from shapely.wkt import loads
@@ -18,9 +18,9 @@ from log_setup import logger
 def iou_wkt(
     gt_wkt: str,
     model_wkt: str,
+    eval_idx: Optional[List[int]] = None,
     discard_100: bool = False,
-    num_polygons: Optional[int] = None,
-) -> float:
+) -> tuple:
     """
     Calculates the Intersection over Union (IoU) between segmentation polygons in WKT format.
 
@@ -39,24 +39,35 @@ def iou_wkt(
         logger.info("Reading WKTs files...")
         with open(gt_wkt, "r") as f:
             ground_truth_wkt = f.read().splitlines()
-
         with open(model_wkt, "r") as f:
-            pred_wkt = f.read().splitlines()
+            model_wkt = f.read().splitlines()
+        # filter indexes to evaluate
+        model_wkt = [model_wkt[i] for i in eval_idx]
+
+        if len(ground_truth_wkt) != len(model_wkt):
+            logger.warning(
+                f"Number of polygons in ground truth ({len(ground_truth_wkt)}) and model ({len(model_wkt)}) do not match."
+            )
+            if len(ground_truth_wkt) > len(model_wkt):
+                ground_truth_wkt = ground_truth_wkt[: len(model_wkt)]
+            else:
+                model_wkt = model_wkt[: len(ground_truth_wkt)]
+
     except Exception as e:
         logger.error(f"Error reading WKT files: {e}")
         return
 
     # Convert WKT lines to list of shapely polygons
     try:
-        ground_truth_polys = [loads(wkt) for wkt in ground_truth_wkt]
-        model_polys = [loads(wkt) for wkt in pred_wkt]
+        g_t_polys = [loads(wkt) for wkt in ground_truth_wkt]
+        model_polys = [loads(wkt) for wkt in model_wkt]
     except Exception as e:
         logger.error(f"Error converting WKT to polygons: {e}")
         return
 
-    # Select the first num_polygons polygons
-    g_t_polys = ground_truth_polys[:num_polygons]
-    model_polys = model_polys[:num_polygons]
+    # # Select the first num_polygons polygons
+    # g_t_polys = ground_truth_polys[:num_polygons]
+    # model_polys = model_polys[:num_polygons]
 
     # Discard polygons which index number is multiple of 100 if discard_100 is True
     if discard_100:
@@ -187,7 +198,7 @@ def hausdorff_dist_wkt(
 
 
 def strided_temporal_consistency(
-    polygons: List[Polygon], num_polygons: int, stride: int = 1, exp: bool = True
+    wkt_file: str, num_polygons: int, stride: int = 1, exp: bool = True
 ) -> dict:
     """
     Calculates the temporal consistency between polygons in a sequence with a certain stride.
@@ -205,6 +216,10 @@ def strided_temporal_consistency(
         - tc (list): A list of the temporal consistency values calculated for each pair of polygons.
         - tc_mean (float): The mean temporal consistency value.
     """
+
+    # Load polygons from WKT file
+    with open(wkt_file, "r") as f:
+        polygons = [loads(line.strip()) for line in f]
 
     # Create empty dictionary to store the TC values and and indexes
     t_c = {key: [] for key in ["i", "strd", "tc", "tc_mean"]}
@@ -227,3 +242,46 @@ def strided_temporal_consistency(
     t_c["strd"] = stride
 
     return t_c
+
+
+# def strided_temporal_consistency(
+#     wkt_file: str, num_polygons: int, strides: List[int] = [1], exp: bool = True
+# ) -> Dict[str, List]:
+#     """
+#     Calculates the temporal consistency between polygons in a sequence with a certain stride.
+
+#     Parameters:
+#     wkt_file (str): The path to the WKT file containing the polygons.
+#     num_polygons (int): The total number of polygons in the sequence.
+#     strides (List[int], optional): The strides to use. Defaults to [1].
+#     exp (bool, optional): Whether to exponentiate the temporal consistency values. Defaults to True.
+
+#     Returns:
+#     dict: A dictionary containing the temporal consistency values and related information. The keys are:
+#         - i (list): A list of the starting indices of the compared polygon pairs.
+#         - strd (int): The stride value used.
+#         - tc (list): A list of the temporal consistency values calculated for each pair of polygons.
+#         - tc_mean (float): The mean temporal consistency value.
+
+#     """
+#     # Load polygons from WKT file
+#     with open(wkt_file, "r") as f:
+#         polygons = [loads(line.strip()) for line in f]
+
+#     t_c = {key: [] for key in ["i", "strd", "tc", "tc_mean"]}
+#     polygons = [make_valid(poly) for poly in polygons]
+
+#     for stride in strides:
+#         for i in range(0, num_polygons - stride):
+#             t_c["i"].append(i)
+#             area_i = polygons[i].area
+#             area_next = polygons[i + stride].area
+#             diff_area = area_i - area_next
+#             tc_temp = 1 - (diff_area / area_next)
+#             t_c["tc"].append(np.power(tc_temp, 10) if exp else tc_temp)
+
+#         t_c["tc_mean"].append(np.mean(t_c["tc"][-num_polygons:]))
+#         t_c["strd"].append(stride)
+#     logger.info(f"Calculated temporal consistency with strides {strides}.")
+
+#     return t_c
