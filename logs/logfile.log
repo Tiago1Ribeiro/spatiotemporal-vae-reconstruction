@@ -269,3 +269,128 @@ Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/ou
 Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet
 2024-01-06 22:50:22,727 - logger - INFO - Data: unet, Mode: extrapol, Model: CVAE Percentage: 70%,
 Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet
+2024-01-07 00:23:42,821 - logger - INFO - Saved history to /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/checkpoints/history_unet_extrapol_70.csv
+2024-01-07 00:32:39,759 - logger - INFO - Creating image list...                          
+2024-01-07 00:32:58,579 - logger - INFO - Writing frames to file 1/22500
+2024-01-07 00:33:03,206 - logger - INFO - Writing frames to file 1001/22500
+2024-01-07 00:33:07,759 - logger - INFO - Writing frames to file 2001/22500
+2024-01-07 00:33:12,377 - logger - INFO - Writing frames to file 3001/22500
+2024-01-07 00:33:16,972 - logger - INFO - Writing frames to file 4001/22500
+2024-01-07 00:33:21,524 - logger - INFO - Writing frames to file 5001/22500
+2024-01-07 00:33:26,189 - logger - INFO - Writing frames to file 6001/22500
+2024-01-07 00:33:30,797 - logger - INFO - Writing frames to file 7001/22500
+2024-01-07 00:33:35,405 - logger - INFO - Writing frames to file 8001/22500
+2024-01-07 00:33:40,037 - logger - INFO - Writing frames to file 9001/22500
+2024-01-07 00:33:44,663 - logger - INFO - Writing frames to file 10001/22500
+2024-01-07 00:33:49,238 - logger - INFO - Writing frames to file 11001/22500
+2024-01-07 00:33:53,803 - logger - INFO - Writing frames to file 12001/22500
+2024-01-07 00:33:58,492 - logger - INFO - Writing frames to file 13001/22500
+2024-01-07 00:34:03,048 - logger - INFO - Writing frames to file 14001/22500
+2024-01-07 00:34:07,601 - logger - INFO - Writing frames to file 15001/22500
+2024-01-07 00:34:12,171 - logger - INFO - Writing frames to file 16001/22500
+2024-01-07 00:34:16,774 - logger - INFO - Writing frames to file 17001/22500
+2024-01-07 00:34:21,368 - logger - INFO - Writing frames to file 18001/22500
+2024-01-07 00:34:25,934 - logger - INFO - Writing frames to file 19001/22500
+2024-01-07 00:34:30,624 - logger - INFO - Writing frames to file 20001/22500
+2024-01-07 00:34:35,218 - logger - INFO - Writing frames to file 21001/22500
+2024-01-07 00:34:39,815 - logger - INFO - Writing frames to file 22001/22500
+2024-01-07 00:34:42,122 - logger - INFO - Saved video to /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet/video_unet_extrapol_70.mp4
+2024-01-07 00:34:42,153 - logger - INFO - Converting masks to polygons...
+2024-01-07 14:02:57,307 - logger - INFO - Data: unet, Mode: extrapol, Model: CVAE Percentage: 70%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet
+2024-01-07 14:03:32,593 - logger - INFO - ------------------------------
+|   Data   |   Mode   |  Model   |Percentage|  Epochs  |
+------------------------------
+|   unet   | extrapol |   CVAE   |    70    |    2     |
+------------------------------
+2024-01-07 14:05:57,513 - logger - INFO - Data: unet, Mode: extrapol, Model: CVAE Percentage: 70%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet
+2024-01-07 16:03:40,521 - logger - INFO - No. train. samples: 15771, No. test samples: 23
+2024-01-07 16:04:05,462 - logger - INFO - No. train. samples: 15771 out of 15771, No. test samples: 23 out of 23
+2024-01-07 16:04:14,250 - logger - INFO - No. train. samples: 15771 out of 15771, No. test samples: 22500 out of 23
+2024-01-07 16:04:16,297 - logger - INFO - No. train. samples: 15771 out of 15771, No. test samples: 22500 out of 23
+2024-01-07 16:04:29,758 - logger - INFO - No. train. samples: 15771 out of 22500, No. test samples: 22500 
+2024-01-07 16:04:38,090 - logger - INFO - No. train. samples: 15771 out of 22500, No. test samples: 23
+2024-01-07 16:04:43,165 - logger - INFO - No. train. samples: 15771 out of 22500 | No. test samples: 23
+2024-01-07 16:05:23,198 - logger - INFO - No. train. samples: 15771 out of 22500 (70%) | No. test samples: 23
+2024-01-07 16:07:30,735 - logger - INFO - Data: unet, Mode: extrapol, Model: CVAE Percentage: 70%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet
+2024-01-07 16:07:30,797 - logger - INFO - No. train. samples: 15771 out of 22500 (70%) | No. test samples: 23
+2024-01-07 16:25:11,152 - logger - INFO - Data: unet, Mode: extrapol, Model: CVAE Percentage: 70%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet
+2024-01-07 16:25:11,207 - logger - INFO - No. train. samples: 15771 out of 22500 (70%) | No. test samples: 23
+2024-01-07 16:26:03,994 - logger - INFO - Data: unet, Mode: extrapol, Model: CVAE Percentage: 70%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet
+2024-01-07 16:26:04,054 - logger - INFO - No. train. samples: 15771 out of 22500 (70%) | No. test samples: 23
+2024-01-07 16:33:04,364 - logger - INFO - Creating image list...                          
+2024-01-07 16:33:23,179 - logger - INFO - Writing frames to file 1/22500
+2024-01-07 16:33:28,164 - logger - INFO - Saved video to /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet/video_unet_extrapol_70.mp4
+2024-01-07 16:36:02,339 - logger - INFO - Data: unet, Mode: extrapol, Model: CVAE Percentage: 70%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet
+2024-01-07 16:36:02,394 - logger - INFO - No. train. samples: 15771 out of 22500 (70%) | No. test samples: 23
+2024-01-07 16:56:49,753 - logger - INFO - Data: unet, Mode: extrapol, Model: CVAE Percentage: 70%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet
+2024-01-07 16:56:49,809 - logger - INFO - No. train. samples: 15771 out of 22500 (70%) | No. test samples: 23
+2024-01-07 18:04:33,638 - logger - INFO - Creating image list...                          
+2024-01-07 18:04:52,412 - logger - INFO - Writing frames to file 1/22500
+2024-01-07 18:04:58,049 - logger - INFO - Writing frames to file 1001/22500
+2024-01-07 18:05:03,736 - logger - INFO - Writing frames to file 2001/22500
+2024-01-07 18:05:09,526 - logger - INFO - Writing frames to file 3001/22500
+2024-01-07 18:05:15,222 - logger - INFO - Writing frames to file 4001/22500
+2024-01-07 18:05:20,936 - logger - INFO - Writing frames to file 5001/22500
+2024-01-07 18:05:26,595 - logger - INFO - Writing frames to file 6001/22500
+2024-01-07 18:05:32,246 - logger - INFO - Writing frames to file 7001/22500
+2024-01-07 18:05:37,840 - logger - INFO - Writing frames to file 8001/22500
+2024-01-07 18:05:43,481 - logger - INFO - Writing frames to file 9001/22500
+2024-01-07 18:05:49,112 - logger - INFO - Writing frames to file 10001/22500
+2024-01-07 18:05:54,826 - logger - INFO - Writing frames to file 11001/22500
+2024-01-07 18:06:00,518 - logger - INFO - Writing frames to file 12001/22500
+2024-01-07 18:06:06,108 - logger - INFO - Writing frames to file 13001/22500
+2024-01-07 18:06:11,721 - logger - INFO - Writing frames to file 14001/22500
+2024-01-07 18:06:17,262 - logger - INFO - Writing frames to file 15001/22500
+2024-01-07 18:06:22,903 - logger - INFO - Writing frames to file 16001/22500
+2024-01-07 18:06:28,525 - logger - INFO - Writing frames to file 17001/22500
+2024-01-07 18:06:34,072 - logger - INFO - Writing frames to file 18001/22500
+2024-01-07 18:06:39,675 - logger - INFO - Writing frames to file 19001/22500
+2024-01-07 18:06:45,367 - logger - INFO - Writing frames to file 20001/22500
+2024-01-07 18:06:51,347 - logger - INFO - Writing frames to file 21001/22500
+2024-01-07 18:06:56,961 - logger - INFO - Writing frames to file 22001/22500
+2024-01-07 18:06:59,739 - logger - INFO - Saved video to /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet/video_unet_extrapol_70.mp4
+2024-01-07 19:13:31,558 - logger - INFO - Converting masks to polygons...
+2024-01-07 19:14:11,346 - logger - INFO - Converting masks to polygons...
+2024-01-07 21:19:07,894 - logger - INFO - Saved polygons to /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/70/unet/WKT/extrapol_unet.wkt
+2024-01-07 22:06:50,312 - logger - INFO - Data: unet, Mode: extrapol, Model: CVAE Percentage: 90%,
+Output directory: /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/90/unet
+2024-01-07 22:06:50,364 - logger - INFO - No. train. samples: 20277 out of 22500 (90%) | No. test samples: 23
+2024-01-07 23:50:58,423 - logger - INFO - Creating image list...                          
+2024-01-07 23:51:17,377 - logger - INFO - Writing frames to file 1/22500
+2024-01-07 23:51:22,117 - logger - INFO - Writing frames to file 1001/22500
+2024-01-07 23:51:26,819 - logger - INFO - Writing frames to file 2001/22500
+2024-01-07 23:51:31,528 - logger - INFO - Writing frames to file 3001/22500
+2024-01-07 23:51:36,281 - logger - INFO - Writing frames to file 4001/22500
+2024-01-07 23:51:40,992 - logger - INFO - Writing frames to file 5001/22500
+2024-01-07 23:51:45,782 - logger - INFO - Writing frames to file 6001/22500
+2024-01-07 23:51:50,579 - logger - INFO - Writing frames to file 7001/22500
+2024-01-07 23:51:55,276 - logger - INFO - Writing frames to file 8001/22500
+2024-01-07 23:52:00,035 - logger - INFO - Writing frames to file 9001/22500
+2024-01-07 23:52:04,721 - logger - INFO - Writing frames to file 10001/22500
+2024-01-07 23:52:09,437 - logger - INFO - Writing frames to file 11001/22500
+2024-01-07 23:52:14,161 - logger - INFO - Writing frames to file 12001/22500
+2024-01-07 23:52:18,932 - logger - INFO - Writing frames to file 13001/22500
+2024-01-07 23:52:23,713 - logger - INFO - Writing frames to file 14001/22500
+2024-01-07 23:52:28,534 - logger - INFO - Writing frames to file 15001/22500
+2024-01-07 23:52:33,284 - logger - INFO - Writing frames to file 16001/22500
+2024-01-07 23:52:38,044 - logger - INFO - Writing frames to file 17001/22500
+2024-01-07 23:52:42,768 - logger - INFO - Writing frames to file 18001/22500
+2024-01-07 23:52:47,533 - logger - INFO - Writing frames to file 19001/22500
+2024-01-07 23:52:52,288 - logger - INFO - Writing frames to file 20001/22500
+2024-01-07 23:52:57,036 - logger - INFO - Writing frames to file 21001/22500
+2024-01-07 23:53:01,755 - logger - INFO - Writing frames to file 22001/22500
+2024-01-07 23:53:04,149 - logger - INFO - Saved video to /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/90/unet/video_unet_extrapol_90.mp4
+2024-01-07 23:53:04,183 - logger - INFO - Converting masks to polygons...
+2024-01-08 02:12:34,183 - logger - INFO - Saved polygons to /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/outputs/CVAE/extrapol/90/unet/WKT/extrapol_unet.wkt
+2024-01-08 14:39:01,944 - logger - INFO - Converting masks to polygons...
+2024-01-08 14:39:01,945 - logger - INFO - Saved polygons to data/unet_generated/masks/WKT/unet_masks.wkt
+2024-01-08 14:39:56,106 - logger - INFO - Converting masks to polygons...
+2024-01-08 14:39:56,107 - logger - INFO - Saved polygons to /home/tiagociic/Projectos/spatiotemporal-vae-reconstruction/data/unet_generated/WKT/masks.wkt
+2024-01-08 14:40:30,087 - logger - INFO - Converting masks to polygons...
