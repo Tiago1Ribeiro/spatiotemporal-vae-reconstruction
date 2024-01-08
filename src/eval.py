@@ -82,16 +82,16 @@ def iou_wkt(
 def hausdorff_dist_wkt(
     gt_wkt: str,
     model_wkt: str,
-    last_frame: Optional[int] = 22500,
+    eval_idx: Optional[List[int]] = None,
     discard_100: bool = False,
 ) -> tuple:
     """
     Calculates the Hausdorff distance between the ground truth and the model.
 
     Parameters:
-    ground_truth_file (str): The path to the ground truth WKT file.
-    model_file (str): The path to the model WKT file.
-    last_frame (int): The last frame to consider. Defaults to 22500.
+    gt-wkt (str): The path to the ground truth WKT file.
+    model_wkt (str): The path to the model WKT file.
+    eval_idx (int): The last frame to consider. Defaults to 22500.
     discard_100 (bool): Whether to discard polygons which index number is multiple of 100. Defaults to False.
 
     Returns:
@@ -103,24 +103,35 @@ def hausdorff_dist_wkt(
         logger.info("Reading WKTs files...")
         with open(gt_wkt, "r") as f:
             ground_truth_wkt = f.read().splitlines()
-
         with open(model_wkt, "r") as f:
             model_wkt = f.read().splitlines()
+        # filter indexes to evaluate
+        model_wkt = [model_wkt[i] for i in eval_idx]
+
+        if len(ground_truth_wkt) != len(model_wkt):
+            logger.warning(
+                f"Number of polygons in ground truth ({len(ground_truth_wkt)}) and model ({len(model_wkt)}) do not match."
+            )
+            if len(ground_truth_wkt) > len(model_wkt):
+                ground_truth_wkt = ground_truth_wkt[: len(model_wkt)]
+            else:
+                model_wkt = model_wkt[: len(ground_truth_wkt)]
+
     except Exception as e:
         logger.error(f"Error reading WKT files: {e}")
         return
 
     # Convert WKT lines to list of shapely polygons
     try:
-        ground_truth_polys = [loads(wkt) for wkt in ground_truth_wkt]
+        g_t_polys = [loads(wkt) for wkt in ground_truth_wkt]
         model_polys = [loads(wkt) for wkt in model_wkt]
     except Exception as e:
         logger.error(f"Error converting WKT to polygons: {e}")
         return e
 
-    # Select the first last_frame polygons
-    g_t_polys = ground_truth_polys[:last_frame]
-    model_polys = model_polys[:last_frame]
+    # Select the first num_polygons polygons
+    # g_t_polys = ground_truth_polys[:last_frame]
+    # model_polys = model_polys[:last_frame]
 
     # Discard polygons which index number is multiple of 100 if discard_100 is True
     if discard_100:

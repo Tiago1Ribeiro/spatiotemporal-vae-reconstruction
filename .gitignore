@@ -43,3 +43,4 @@ src/tests.py
 *.mp4
 
 
+data/unet_generated/WKT/masks.wkt
