@@ -5,14 +5,44 @@ import os
 import re
 import numpy as np
 import tensorflow as tf
+from glob import glob
 
-# from glob import glob
 # import yaml
 import cv2
 import pandas as pd
 from tqdm import tqdm
 from typing import Tuple
 from log_setup import logger
+
+
+def get_files_dirs_ext(dirs: list, ext: str, return_paths: bool = False):
+    """
+    Get all files with a specific extension in a list of directories
+
+    Args:
+        dirs (list): List of directories to search for files
+        ext (str): File extension to search for
+        return_paths (bool, optional): If True, returns the paths of the files. Defaults to False.
+
+    Returns:
+        list: List of files with the specific extension in the directories
+    """
+
+    result = set()
+
+    for dir_path in dirs:
+        # Use glob to find all files with the specific extension in the directory and its subdirectories
+        file_paths = glob(
+            os.path.join(dir_path, "**/*." + ext), recursive=True
+        )
+
+        if file_paths:
+            if return_paths:
+                result.update(file_paths)
+            else:
+                result.update([os.path.dirname(path) for path in file_paths])
+
+    return list(result)
 
 
 def draw_mask(points, orig_dims, width, height):

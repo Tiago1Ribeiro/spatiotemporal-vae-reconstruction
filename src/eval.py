@@ -242,6 +242,7 @@ def save_results_to_csv(results: Dict[str, Dict[str, Any]], base_filename: str):
                         "Temp. Consistency": tc,
                     }
                 )
+    logger.info(f"Saved results to {base_filename}.csv.")
 
 
 def calculate_temporal_consistency(i, polygons, stride, exp=False):

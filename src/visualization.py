@@ -7,7 +7,7 @@ import numpy as np
 plt.rcParams.update({"figure.max_open_warning": 0})
 
 # typing
-from typing import List
+from typing import List, Dict
 
 
 def setup_plot(log_scale=True, plt_title: str = "Learning Curves"):
@@ -155,60 +155,138 @@ def plot_generated_imgs(model, frames_num_list: List[int]):
     plt.show()
 
 
-def create_boxplot(data, positions, colors):
+import matplotlib.pyplot as plt
+
+
+def create_boxplot(data_ts, data_pr, labels, title, ylabel):
+    _, ax = plt.subplots(figsize=(10, 8))
     """
     Creates a boxplot using matplotlib.
 
     Parameters:
-    data (dict): A dictionary where the keys are the names of the models and the values are another dictionary containing the 'ts' and 'pr' lists.
-    positions (dict): A dictionary specifying the positions for the bars.
-    colors (list): A list of colors for the boxes.
-
-    Returns:
-    None
+    data_ts (List[float]): The data to be plotted for the test set.
+    data_pr (List[float]): The data to be plotted for the U-NET.
+    labels (List[str]): The labels for the boxplots.
+    title (str): The title of the plot.
+    ylabel (str): The label for the y axis.
     """
-    # Set up the figure and axes
-    _, ax = plt.subplots(figsize=(10, 8))
 
-    # Function to set box colors
-    def set_box_colors(boxplot):
-        """
-        Sets the colors for the boxes in the boxplot.
-        """
-        for patch, color in zip(boxplot["boxes"], colors):
-            patch.set_facecolor(color)
 
-    # Create boxplots
-    for key, pos in positions.items():
-        boxplot = ax.boxplot(
-            [data[name][key] for name in data],
-            positions=pos,
-            medianprops={"linewidth": 1, "color": "orange"},
-            showfliers=False,
-            flierprops=dict(markerfacecolor="r", markersize=2),
-            patch_artist=True,
-        )
-        set_box_colors(boxplot)
+    left = [1, 1.5, 2]
+    right = [2.75, 3.25, 3.75]
 
-    # Add dashed gridlines for y axis ONLY
-    ax.yaxis.grid(True, linestyle="--", linewidth=0.5)
-
-    # x labels
-    ax.set_xticks([1.5, 3.25])
-    ax.set_xticklabels(["Test Set", "U-NET"])
-
-    # Increase font size
-    ax.tick_params(axis="both", which="major", labelsize=14)
-
-    # Add legend for each model, font size 14
-    ax.legend(
-        [boxplot["boxes"][i] for i in range(len(data))],
-        list(data.keys()),
-        fontsize=14,
+    boxplot_ts = ax.boxplot(
+        data_ts,
+        positions=left,
+        medianprops={"linewidth": 1, "color": "orange"},
+        showfliers=False,
+        flierprops=dict(markerfacecolor="r", markersize=2),
+        patch_artist=True,
     )
 
-    # Add y label
-    ax.set_ylabel("Haussdorf Distance", fontsize=14)
+    boxplot_unet = ax.boxplot(
+        data_pr,
+        positions=right,
+        medianprops={"linewidth": 1, "color": "orange"},
+        showfliers=False,
+        flierprops=dict(markerfacecolor="r", markersize=2),
+        patch_artist=True,
+    )
 
-    # Show the plot
+    colors = [
+        "lightgreen",
+        "lightblue",
+        "lightcoral",
+        "lightgreen",
+        "lightblue",
+        "lightcoral",
+    ]
+    for patch, color in zip(boxplot_ts["boxes"], colors):
+        patch.set_facecolor(color)
+
+    for patch, color in zip(boxplot_unet["boxes"], colors):
+        patch.set_facecolor(color)
+
+    ax.grid(linestyle="--", linewidth=0.5, axis="y")
+    ax.grid(False, axis="x")
+
+    ax.set_xticks([1.5, 3.25])
+    ax.set_xticklabels(labels)
+    ax.tick_params(axis="both", which="major", labelsize=14)
+
+    ax.legend(
+        [boxplot_ts["boxes"][0], boxplot_ts["boxes"][1], boxplot_ts["boxes"][2]],
+        labels,
+        fontsize=14,
+    )
+    ax.set_ylabel(ylabel, fontsize=14)
+    ax.set_title(title)
+
     plt.show()
+
+
+# def display_boxplot(
+#     data: Dict[str, Dict[str, List[float]]],
+#     positions: Dict[str, int],
+#     colors: List[str],
+# ):
+#     """
+#     Creates a boxplot using matplotlib.
+
+#     Parameters:
+#     data (Dict[str, Dict[str, List[float]]]): The data to be plotted. The keys of the outer dictionary are the names
+#     of the models, while the keys of the inner dictionary are the names of the datasets. The values of the inner
+#     dictionary are the lists of values to be plotted.
+#     positions (Dict[str, int]): The positions of the boxes on the x axis. The keys are the names of the datasets,
+#     while the values are the positions.
+#     colors (List[str]): The colors to be used for the boxes. The length of the list must be equal to the number of
+#     models.
+
+#     Returns:
+#     None
+#     """
+#     # Set up the figure and axes
+#     _, ax = plt.subplots(figsize=(10, 8))
+
+#     # Function to set box colors
+#     def set_box_colors(boxplot):
+#         """
+#         Sets the colors for the boxes in the boxplot.
+#         """
+#         for patch, color in zip(boxplot["boxes"], colors):
+#             patch.set_facecolor(color)
+
+#     # Create boxplots
+#     for key, pos in positions.items():
+#         boxplot = ax.boxplot(
+#             [data[name][key] for name in data],
+#             positions=pos,
+#             medianprops={"linewidth": 1, "color": "orange"},
+#             showfliers=False,
+#             flierprops=dict(markerfacecolor="r", markersize=2),
+#             patch_artist=True,
+#         )
+#         set_box_colors(boxplot)
+
+#     # Add dashed gridlines for y axis ONLY
+#     ax.yaxis.grid(True, linestyle="--", linewidth=0.5)
+
+#     # x labels
+#     ax.set_xticks([1.5, 3.25])
+#     ax.set_xticklabels(["Test Set", "U-NET"])
+
+#     # Increase font size
+#     ax.tick_params(axis="both", which="major", labelsize=14)
+
+#     # Add legend for each model, font size 14
+#     ax.legend(
+#         [boxplot["boxes"][i] for i in range(len(data))],
+#         list(data.keys()),
+#         fontsize=14,
+#     )
+
+#     # Add y label
+#     ax.set_ylabel("Haussdorf Distance", fontsize=14)
+
+#     # Show the plot
+#     plt.show()
