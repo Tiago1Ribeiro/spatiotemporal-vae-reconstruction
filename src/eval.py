@@ -5,7 +5,8 @@ Evaluation functions.
 """
 
 import numpy as np
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Any
+import csv
 
 from shapely.validation import make_valid
 from shapely.wkt import loads
@@ -198,50 +199,56 @@ def hausdorff_dist_wkt(
 
 
 def strided_temporal_consistency(
-    wkt_file: str, num_polygons: int, stride: int = 1, exp: bool = True
-) -> dict:
-    """
-    Calculates the temporal consistency between polygons in a sequence with a certain stride.
-
-    Parameters:
-    polygons (list): A list of Shapely Polygon objects representing the sequence of polygons.
-    num_polygons (int): The total number of polygons in the sequence.
-    stride (int, optional): The number of polygons to skip between comparisons. Defaults to 1.
-    exp (bool, optional): Whether to exponentiate the temporal consistency values. Defaults to True.
-
-    Returns:
-    dict: A dictionary containing the temporal consistency values and related information. The keys are:
-        - i (list): A list of the starting indices of the compared polygon pairs.
-        - strd (int): The stride value used.
-        - tc (list): A list of the temporal consistency values calculated for each pair of polygons.
-        - tc_mean (float): The mean temporal consistency value.
-    """
-
-    # Load polygons from WKT file
+    wkt_file: str,
+    num_polygons: int,
+    strides: List[int],
+) -> Dict[str, Dict[str, Any]]:
     with open(wkt_file, "r") as f:
+        logger.debug("Reading WKT file...")
         polygons = [loads(line.strip()) for line in f]
-
-    # Create empty dictionary to store the TC values and and indexes
-    t_c = {key: [] for key in ["i", "strd", "tc", "tc_mean"]}
-
-    # Make all polygons in the list valid before calculating temporal consistency
+    logger.debug("Validating polygons...")
     polygons = [make_valid(poly) for poly in polygons]
 
-    logger.info(f"Calculating the temporal consistency with stride {stride}...")
-    for i in range(0, num_polygons - stride):
-        # Calculates the temporal consistency between two consecutive polygons
-        t_c["i"].append(i)
-        tc_temp = 1 - (
-            polygons[i].difference(polygons[i + stride]).area
-            / polygons[i + stride].area
-        )
-        t_c["tc"].append(np.power(tc_temp, 10) if exp else tc_temp)
+    results = {}
+    for stride in strides:
+        logger.info(f"Calculating the temporal consistency with stride {stride}...")
+        t_c = {"i": [], "tc": []}
+        for i in range(0, num_polygons - stride):
+            t_c["i"].append(i)
+            t_c["tc"].append(calculate_temporal_consistency(i, polygons, stride))
 
-    # Calculates the mean of the temporal consistency
-    t_c["tc_mean"] = np.mean(t_c["tc"])
-    t_c["strd"] = stride
+        t_c["tc_mean"] = np.mean(t_c["tc"])
+        t_c["strd"] = stride
+        results[stride] = t_c
 
-    return t_c
+    return results
+
+
+def save_results_to_csv(results: Dict[str, Dict[str, Any]], base_filename: str):
+    with open(base_filename + ".csv", "a", newline="") as csvfile:
+        fieldnames = ["Stride", "Start Index", "Temp. Consistency"]
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        # Write header only if the file is empty
+        if csvfile.tell() == 0:
+            writer.writeheader()
+
+        for stride, result in results.items():
+            for i, tc in zip(result["i"], result["tc"]):
+                writer.writerow(
+                    {
+                        "Stride": stride,
+                        "Start Index": i,
+                        "Temp. Consistency": tc,
+                    }
+                )
+
+
+def calculate_temporal_consistency(i, polygons, stride, exp=False):
+    tc_temp = 1 - (
+        polygons[i].difference(polygons[i + stride]).area / polygons[i + stride].area
+    )
+    return np.power(tc_temp, 10) if exp else tc_temp
 
 
 # def strided_temporal_consistency(
