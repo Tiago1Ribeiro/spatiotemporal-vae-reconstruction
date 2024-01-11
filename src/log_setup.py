@@ -30,6 +30,9 @@ format_console = logging.Formatter("%(levelname)s - %(message)s")
 file_handler.setFormatter(format_log)
 stream_handler.setFormatter(format_console)
 
+# Remove all handlers from the logger so that the log messages are not duplicated
+logger.handlers = []
+
 # Add the handlers to the logger
 logger.addHandler(file_handler)
 logger.addHandler(stream_handler)

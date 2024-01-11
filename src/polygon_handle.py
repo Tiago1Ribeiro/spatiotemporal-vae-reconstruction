@@ -140,12 +140,12 @@ def masks_to_polygons(
     out_dim: tuple = (512, 512),
     save_path: str = None,
     return_pol_list: bool = False,
-) -> None:
+) -> list:
     """
     Converts a list of paths to segmentation masks into a list of shapely multipolygons.
 
     Parameters:
-    msks_paths (list): A list of paths to the masks.
+    msks_paths (list): A list of paths to the masks (list of path to PNG, JPG or TIFF files).
     out_dim (tuple): The desired dimensions of the masks. Default is (512, 512).
     save_path (str): Optional. If provided, the function saves the polygons to a WKT file.
     return_pol_list (bool): Optional. If True, the function returns a list of shapely
