@@ -38,7 +38,6 @@ main.py
 src/tests.py
 *.wkt
 
-
 # Video files
 *.mp4
 
