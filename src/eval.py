@@ -198,23 +198,60 @@ def hausdorff_dist_wkt(
 #     return mean_hausdorff_dist, hausdorff_distances
 
 
-def strided_temporal_consistency(
+def strided_temp_consistency(
     wkt_file: str,
-    num_polygons: int,
     strides: List[int],
+    interval: List[int],
 ) -> Dict[str, Dict[str, Any]]:
+    """
+        Calculate the temporal consistency of a set of polygons within a specified interval.
+
+        This function reads a set of polygons from a WKT file, validates them, and calculates
+        their temporal consistency. The calculation is performed with different strides within
+        a specified interval of polygons.
+
+    Parameters:
+        wkt_file (str): Path to the WKT file containing the polygons.
+        strides (List[int]): List of strides to be used in the temporal consistency calculation.
+        interval (List[int]): List of two integers specifying the start and end indices of the
+        interval within which the temporal consistency should be calculated.
+
+    Returns:
+        Dict[str, Dict[str, Any]]: Dictionary mapping each stride to another dictionary containing
+        the indices of the polygons, the calculated temporal consistencies, the mean temporal
+        consistency, and the stride itself.
+    """
+    logger.info(f"Reading WKT file {wkt_file}...")
     with open(wkt_file, "r") as f:
-        logger.debug("Reading WKT file...")
         polygons = [loads(line.strip()) for line in f]
-    logger.debug("Validating polygons...")
-    polygons = [make_valid(poly) for poly in polygons]
+
+
+    # Validate interval
+    if interval[0] >= interval[1]:
+        logger.error(
+            f"Invalid interval: {interval}. End index must be greater than start index."
+        )
+        return {}
+
+    logger.info(f"Validating polygons...")
+    polygons = [make_valid(poly) for poly in polygons[interval[0] : interval[1]]]
+
+    # Validate strides
+    for stride in strides:
+        if stride > len(polygons):
+            logger.warning(
+                f"Stride {stride} is greater than the number of polygons ({len(polygons)}). Skipping this stride."
+            )
+            strides.remove(stride)
+    print(f"Valid strides: {strides}")
+
 
     results = {}
     for stride in strides:
         logger.info(f"Calculating the temporal consistency with stride {stride}...")
         t_c = {"i": [], "tc": []}
-        for i in range(0, num_polygons - stride):
-            t_c["i"].append(i)
+        for i in range(len(polygons) - stride):
+            t_c["i"].append(i + interval[0])
             t_c["tc"].append(calculate_temporal_consistency(i, polygons, stride))
 
         t_c["tc_mean"] = np.mean(t_c["tc"])
@@ -224,13 +261,22 @@ def strided_temporal_consistency(
     return results
 
 
-def save_results_to_csv(results: Dict[str, Dict[str, Any]], base_filename: str):
-    with open(base_filename + ".csv", "a", newline="") as csvfile:
-        fieldnames = ["Stride", "Start Index", "Temp. Consistency"]
+def save_results_to_csv(
+    results: Dict[str, Dict[str, Any]],
+    base_filename: str,
+    fieldnames: Optional[List[str]] = None,
+    overwrite: bool = True,
+):
+    mode = "w" if overwrite else "a"
+    with open(base_filename + ".csv", mode, newline="") as csvfile:
+        # Use os nomes dos campos fornecidos, se houver
+        fieldnames = (
+            fieldnames if fieldnames else ["Stride", "Start Index", "Temp. Consistency"]
+        )
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-        # Write header only if the file is empty
-        if csvfile.tell() == 0:
+        # Escreva o cabeçalho apenas se o arquivo estiver vazio ou estivermos substituindo o arquivo
+        if mode == "w" or csvfile.tell() == 0:
             writer.writeheader()
 
         for stride, result in results.items():
@@ -250,46 +296,3 @@ def calculate_temporal_consistency(i, polygons, stride, exp=False):
         polygons[i].difference(polygons[i + stride]).area / polygons[i + stride].area
     )
     return np.power(tc_temp, 10) if exp else tc_temp
-
-
-# def strided_temporal_consistency(
-#     wkt_file: str, num_polygons: int, strides: List[int] = [1], exp: bool = True
-# ) -> Dict[str, List]:
-#     """
-#     Calculates the temporal consistency between polygons in a sequence with a certain stride.
-
-#     Parameters:
-#     wkt_file (str): The path to the WKT file containing the polygons.
-#     num_polygons (int): The total number of polygons in the sequence.
-#     strides (List[int], optional): The strides to use. Defaults to [1].
-#     exp (bool, optional): Whether to exponentiate the temporal consistency values. Defaults to True.
-
-#     Returns:
-#     dict: A dictionary containing the temporal consistency values and related information. The keys are:
-#         - i (list): A list of the starting indices of the compared polygon pairs.
-#         - strd (int): The stride value used.
-#         - tc (list): A list of the temporal consistency values calculated for each pair of polygons.
-#         - tc_mean (float): The mean temporal consistency value.
-
-#     """
-#     # Load polygons from WKT file
-#     with open(wkt_file, "r") as f:
-#         polygons = [loads(line.strip()) for line in f]
-
-#     t_c = {key: [] for key in ["i", "strd", "tc", "tc_mean"]}
-#     polygons = [make_valid(poly) for poly in polygons]
-
-#     for stride in strides:
-#         for i in range(0, num_polygons - stride):
-#             t_c["i"].append(i)
-#             area_i = polygons[i].area
-#             area_next = polygons[i + stride].area
-#             diff_area = area_i - area_next
-#             tc_temp = 1 - (diff_area / area_next)
-#             t_c["tc"].append(np.power(tc_temp, 10) if exp else tc_temp)
-
-#         t_c["tc_mean"].append(np.mean(t_c["tc"][-num_polygons:]))
-#         t_c["strd"].append(stride)
-#     logger.info(f"Calculated temporal consistency with strides {strides}.")
-
-#     return t_c

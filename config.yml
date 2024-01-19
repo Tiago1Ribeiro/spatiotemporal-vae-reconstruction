@@ -40,3 +40,6 @@ outputs:
     full: extrapol/full
     sampled: extrapol/sampled
 
+eval:
+  strides: [1, 10, 100, 1000, 10000]
+
