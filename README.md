@@ -1,4 +1,4 @@
-# Modelling forest fire dynamics using conditional variational auto-encoders (Under Review)
+# Modelling forest fire dynamics using conditional variational auto-encoders (*Under Review*)
 
 ## TL;DR
 
