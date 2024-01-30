@@ -164,40 +164,6 @@ def hausdorff_dist_wkt(
     return hausdorff_dist_mean, hausdorff_dist_list
 
 
-# def wkt_hausdorff_distance(ground_truth_wkt: List[str], eval_wkt: List[str]) -> tuple:
-#     """
-#     Calculate the Hausdorff distance between two sets of polygons.
-
-#     Parameters:
-#         ground_truth_wkt (List[str]): List of Well-Known Text (WKT) representations of polygons.
-#         eval_wkt (List[str]): List of Well-Known Text (WKT) representations of polygons.
-
-#     Returns:
-#         tuple: Tuple containing the mean Hausdorff distance and the list of individual Hausdorff distances.
-#     """
-#     # Load the polygons from the WKT representations
-#     model_polygons = [loads(wkt) for wkt in eval_wkt]
-#     ground_truth_polygons = [loads(wkt) for wkt in ground_truth_wkt]
-
-#     # Ensure that the polygons are valid
-#     ground_truth_polygons = [make_valid(polygon) for polygon in ground_truth_polygons]
-#     model_polygons = [make_valid(polygon) for polygon in model_polygons]
-
-#     # Calculate the Hausdorff distances
-#     hausdorff_distances = []
-#     for gt_poly, model_poly in zip(ground_truth_polygons, model_polygons):
-#         try:
-#             hausdorff_dist = gt_poly.hausdorff_distance(model_poly)
-#             hausdorff_distances.append(hausdorff_dist)
-#         except Exception as e:
-#             print(f"Error calculating Hausdorff distance: {e}")
-
-#     # Calculate the mean Hausdorff distance
-#     mean_hausdorff_dist = np.mean(hausdorff_distances) if hausdorff_distances else None
-
-#     return mean_hausdorff_dist, hausdorff_distances
-
-
 def strided_temp_consistency(
     wkt_file: str,
     strides: List[int],
@@ -225,7 +191,6 @@ def strided_temp_consistency(
     with open(wkt_file, "r") as f:
         polygons = [loads(line.strip()) for line in f]
 
-
     # Validate interval
     if interval[0] >= interval[1]:
         logger.error(
@@ -244,7 +209,6 @@ def strided_temp_consistency(
             )
             strides.remove(stride)
     print(f"Valid strides: {strides}")
-
 
     results = {}
     for stride in strides:

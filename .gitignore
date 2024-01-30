@@ -20,11 +20,11 @@ __pycache__/
 *.pt
 *.pth
 
-# output folder WKT files
-outputs/**/*.wkt
+# Other extensions
+*.mp4
+*.wkt
 
-# specific files
-src/cvae_model.py
+# Specific files
 src/cvae_model_v2.py
 data/segs_unet_base.wkt
 notebooks/conditional_difusion_models.ipynb
@@ -32,14 +32,28 @@ notebooks/notas_outro_modelo.ipynb
 notebooks/2_1_CVAE_interpol.ipynb
 src/datapreprocessing.ipynb
 src/data_preprocessing.py
-src/cvae_model.py
-src/cvae_model_v2.py
 main.py
 src/tests.py
-*.wkt
-
-# Video files
-*.mp4
-
-
-data/unet_generated/WKT/masks.wkt
+notebooks/extrapol_10_hd.csv
+notebooks/extrapol_30_hd.csv
+notebooks/interpol_hd.csv
+notebooks/notas_outro_modelo.ipynb
+notebooks/unet_{percentage}_hd.csv
+notebooks/unet_10_hd_list.csv
+notebooks/unet_10_hd.csv
+notebooks/unet_10_iou_list.csv
+notebooks/unet_10_temp_consistency.csv
+notebooks/unet_30_hd_list.csv
+notebooks/unet_30_hd.csv
+notebooks/unet_30_iou_list.csv
+notebooks/unet_30_temp_consistency.csv
+notebooks/unet_50_hd_list.csv
+notebooks/unet_50_hd.csv
+notebooks/unet_50_iou_list.csv
+notebooks/unet_50_temp_consistency.csv
+notebooks/unet_70_hd_list.csv
+notebooks/unet_70_hd.csv
+notebooks/unet_70_iou_list.csv
+notebooks/unet_90_hd_list.csv
+notebooks/unet_90_hd.csv
+notebooks/unet_90_iou_list.csv
