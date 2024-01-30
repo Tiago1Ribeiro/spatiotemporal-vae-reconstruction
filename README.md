@@ -1,4 +1,4 @@
-## Modelling forest fire dynamics using conditional variational auto-encoders (Under Review)
+# Modelling forest fire dynamics using conditional variational auto-encoders (Under Review)
 
 ## TL;DR
 
@@ -10,6 +10,32 @@ This research applies deep networks to simulate the spatial and temporal evoluti
 - `git` for version control.
 - `zenodo-get` downloader.
 - Python 3.10.
+
+## Repo Struture
+
+```
+spatiotemporal-vae-reconstruction/ 📁 
+├── checkpoints/      💾: Checkpoints for model training 
+├── data/             📂: Data
+├── logs/             📃: Log files 
+├── notebooks/        📓: Jupyter notebooks 
+│   ├── 1_data_preparation.ipynb  📊: Data preparation
+│   ├── 2_modelling.ipynb         📚: Model training
+│   ├── 3_evaluation.ipynb        📈: Evaluation
+│   └── ...                        
+├── outputs/          📺: Output files generated during execution 
+├── src/              📜: Source code files
+│   ├── __init__.py   
+│   ├── cvae_model.py 📑: CVAE model implementation
+│   ├── eval.py       📐: Evaluation script
+│   ├── utils.py      🛠️: Utility functions
+│   └── ...                
+├── .gitignore        🚫: Files to ignore in Git
+├── config.yml        🎛️: Configuration settings 
+├── README.md         📖: Project README file 
+└── requirements.txt  📄: Dependencies
+
+```
 
 ## Operating System
 
@@ -44,8 +70,9 @@ zenodo_get --output dataset 10.5281/zenodo.7944963 # or dowload it from the link
 
 ## To do list (🚧):
 
-- [ ] Incluir as *U-Net samples (Base, RED, 3D)* e *sampled_masks.txt* no dataset (ZENODO v2)
+- [ ] Include the U-Net samples (Base, RED, 3D) and sampled_masks.txt in the dataset (new Zenodo version)
 - [ ] Test repo in other machines
+
 
 ## Dataset Citation
 
