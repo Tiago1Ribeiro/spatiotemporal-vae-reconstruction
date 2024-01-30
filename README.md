@@ -1,40 +1,30 @@
-# Reconstructing Spatiotemporal Data with C-VAEs (🚧 Under Constrution 🚧)
+## Modelling forest fire dynamics using conditional variational auto-encoders (Under Review)
 
-## To do list:
+## TL;DR
 
-- [x] Testar CVAE refatorado (resolver problema com mse_kl_loss)
-- [x] Implementar os 4 modos de treino
-- [x] Testar com menos amostras de treino
-- [ ] Gerar WKTs para os vários modelos
-- [ ] Incluir as *U-Net samples (Base, RED, 3D)* e *sampled_masks.txt* no dataset (ZENODO v2)
-- [ ] Construir modelos alternativos ao CVAE do artigo ADBIS 2023
-- [ ] Adaptar código para facilmente mudar a configuração do dataset  
-      (total, amostrado, total extrapolação, amostrado extrapolação)
+This research applies deep networks to simulate the spatial and temporal evolution of a forest fire's impact on a region. Using a Conditional Variational Autoencoder (CVAE) model, we generate intermediate representations of the burnt area's evolution. we also employ a CVAE model to predict future fire propagation behavior, estimating the burnt area at various time horizons and propagation stages. Real-world data is used to assess the model's performance, with results showing high similarity and temporal consistency metrics, indicating that the application of CVAE in this context is capable.
 
-### Overview
+## Prerequisites
 
-Summary here.
-
-### Prerequisites:
-- <tt>conda</tt> for managing Python environments.
-- <tt>git</tt> for version control.
-- <tt>zenodo-get</tt> downloader.
+- `conda` for managing Python environments.
+- `git` for version control.
+- `zenodo-get` downloader.
 - Python 3.10.
 
-
-### Operating System
+## Operating System
 
 This project has been tested on the following operating systems:
 
 - Pop! OS 22.04 LTS (Nvidia)
 - Windows 11
 
-### CUDA Versions
+## Main Settings
 
-HERE
+- Tensorflow 2.15.0
+- CUDA 11.5
 
+## Setting up the environment
 
-### Setting up the environment
 ```bash
 # Create a new Conda environment named 'cvae' with Python version 3.10
 conda create --name cvae python=3.10  
@@ -52,7 +42,12 @@ pip install -r requirements.txt
 zenodo_get --output dataset 10.5281/zenodo.7944963 # or dowload it from the link below
 ```
 
-### Dataset Citation
+## To do list (🚧):
+
+- [ ] Incluir as *U-Net samples (Base, RED, 3D)* e *sampled_masks.txt* no dataset (ZENODO v2)
+- [ ] Test repo in other machines
+
+## Dataset Citation
 
 ```bibtex
 @misc{ba_uav_dataset,
