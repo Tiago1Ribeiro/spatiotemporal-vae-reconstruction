@@ -1,17 +1,23 @@
-# Modelling forest fire dynamics using conditional variational auto-encoders (*Under Review*)
+# Modelling forest fire dynamics using conditional variational auto-encoders
 
-## TL;DR
+<div align="center">
+
+  [Reviewed Article](http://dx.doi.org/10.1007/978-3-031-42914-9_5) | [Dataset](https://zenodo.org/record/7944963#.ZGYoxHbMIQ8) 
+ 
+</div>
+
+### TL;DR
 
 This research applies deep networks to simulate the spatial and temporal evolution of a forest fire's impact on a region. Using a Conditional Variational Autoencoder (CVAE) model, we generate intermediate representations of the burnt area's evolution. we also employ a CVAE model to predict future fire propagation behavior, estimating the burnt area at various time horizons and propagation stages. Real-world data is used to assess the model's performance, with results showing high similarity and temporal consistency metrics, indicating that the application of CVAE in this context is capable.
 
-## Prerequisites
+### Prerequisites
 
 - `conda` for managing Python environments.
 - `git` for version control.
 - `zenodo-get` downloader.
 - Python 3.10.
 
-## Repo Struture
+### Repo Structure
 
 ```
 spatiotemporal-vae-reconstruction/ 📁 
@@ -37,19 +43,19 @@ spatiotemporal-vae-reconstruction/ 📁
 
 ```
 
-## Operating System
+### Operating System
 
 This project has been tested on the following operating systems:
 
 - Pop! OS 22.04 LTS (Nvidia)
 - Windows 11
 
-## Main Settings
+### Main Settings
 
 - Tensorflow 2.15.0
 - CUDA 11.5
 
-## Setting up the environment
+### Setting up the environment
 
 ```bash
 # Create a new Conda environment named 'cvae' with Python version 3.10
@@ -65,16 +71,30 @@ cd spatiotemporal-vae-reconstruction
 pip install -r requirements.txt  
 
 # Downloads *BurnedAreaUAU* dataset and save it in the 'dataset' directory
-zenodo_get --output dataset 10.5281/zenodo.7944963 # or dowload it from the link below
+zenodo_get --output dataset 10.5281/zenodo.7944963 # or download it from the link below
 ```
 
-## To do list (🚧):
+### To-do list (🚧):
 
 - [ ] Include the U-Net samples (Base, RED, 3D) and sampled_masks.txt in the dataset (new Zenodo version)
 - [ ] Test repo in other machines
 
 
-## Dataset Citation
+### Article Citation
+
+```bibtex
+@article{ribeiro2024modelling,
+  title={Modelling forest fire dynamics using conditional variational autoencoders},
+  author={Ribeiro, Tiago Filipe Rodrigues and Silva, Fernando Jos{\'e} Mateus da and Costa, Rog{\'e}rio Lu{\'\i}s de Carvalho},
+  journal={Information Systems Frontiers},
+  pages={1--20},
+  year={2024},
+  publisher={Springer},
+  doi = {https://doi.org/10.1007/s10796-024-10507-9}
+}
+```
+
+### Dataset Citation
 
 ```bibtex
 @misc{ba_uav_dataset,
